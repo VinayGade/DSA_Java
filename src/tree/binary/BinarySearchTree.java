@@ -1,5 +1,8 @@
 package tree.binary;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinarySearchTree {
 
     TreeNode root;
@@ -191,8 +194,26 @@ public class BinarySearchTree {
                     && isBalanced(root.right);
     }
 
-    public boolean isValidBST(TreeNode root){
+    public boolean isValidBST(TreeNode root) {
+        if(root == null)
+            return true;
+        List<Integer> inorder = inorderTraversal(root);
+        for(int i=0; i< inorder.size()-1;i++){
+            if(inorder.get(i)>=inorder.get(i+1)){
+                return false;
+            }
+        }
         return true;
+    }
+
+    List<Integer> inorderTraversal(TreeNode root){
+        List<Integer> inorder = new ArrayList<>();
+        if(root != null){
+            inorderTraversal(root.left);
+            inorder.add(root.data);
+            inorderTraversal(root.right);
+        }
+        return inorder;
     }
 
 }
