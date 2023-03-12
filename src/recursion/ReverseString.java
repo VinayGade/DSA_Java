@@ -15,6 +15,17 @@ public class ReverseString {
         c[j] = temp;
     }
 
+    private void reverseIterative(char[] c){
+        int n = c.length;
+        int i = 0;
+        int j = n - 1;
+        while( i<n && j>=0 ){
+            swap(c, i, j);
+            i++;
+            j--;
+        }
+    }
+
     public static void main(String[] args) {
 
         String source = "Java SE 8 Stream API";
