@@ -195,8 +195,10 @@ public class BinarySearchTree {
     }
 
     public boolean isValidBST(TreeNode root) {
+
         if(root == null)
             return true;
+
         List<Integer> inorder = inorderTraversal(root);
         for(int i=0; i< inorder.size()-1;i++){
             if(inorder.get(i)>=inorder.get(i+1)){

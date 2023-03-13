@@ -15,6 +15,7 @@ public class ReverseString {
         c[j] = temp;
     }
 
+    // iterative approach to reverse string
     private void reverseIterative(char[] c){
         int n = c.length;
         int i = 0;
