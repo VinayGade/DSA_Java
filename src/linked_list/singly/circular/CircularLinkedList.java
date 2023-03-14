@@ -4,7 +4,7 @@ import linked_list.singly.Node;
 
 public class CircularLinkedList {
 
-    private Node last;
+    private CircularNode last;
 
     public CircularLinkedList(){
         last = null;
@@ -14,25 +14,50 @@ public class CircularLinkedList {
         return last == null;
     }
 
-    public int size(){
-        if(isEmpty())
+    public int size() {
+        if (isEmpty())
             return 0;
-        else
-            return 1;
+        else {
+            int length=0;
+            CircularNode first = last.next;
+
+            //System.out.println("first ");
+            while (first != last) {
+                //System.out.print(" -> " + first.data);
+                first = first.next;
+                length++;
+            }
+            return length;
+        }
     }
 
     public void traverse(){
         if(isEmpty())
             return;
         else{
-            Node first = last.getNext();
+            CircularNode first = last.next;
 
             System.out.println("first ");
             while(first != last){
-                System.out.print(" -> "+first.getData());
-                first = first.getNext();
+                System.out.print(" -> "+first.data);
+                first = first.next;
             }
-            System.out.println(first.getData()+" -> last");
+            System.out.println(first.data+" -> last");
         }
+    }
+
+    public void insertBegin(int data){
+
+        // if Circular list is empty same logic will work to add new node in it
+        // since very first node could be added only at begin
+
+        CircularNode temp = new CircularNode(data);
+
+        if(isEmpty())
+            last = temp;
+        else
+            temp.next = last.next;
+
+        last.next = temp;
     }
 }
