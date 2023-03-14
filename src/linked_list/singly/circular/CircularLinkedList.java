@@ -79,4 +79,22 @@ public class CircularLinkedList {
         }
     }
 
+    public int deleteBegin(){
+        // returns data of deleted element
+
+        if(isEmpty()){
+            System.out.println("Circular List Empty !! cannot delete element...");
+            return -1;
+        }else{
+            CircularNode temp = last.next;
+            if(last.next == last)
+                last = null;
+            else
+                last.next = temp.next;
+
+            temp.next = null;
+            return temp.data;
+        }
+    }
+
 }

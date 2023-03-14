@@ -31,5 +31,13 @@ public class CircularListOperations {
         circularList.traverse();
 
         System.out.println("Size of circular list after insertions = "+circularList.size());
+
+        System.out.println("Deleted 1st element  : "+circularList.deleteBegin());
+
+        System.out.println("Traverse Circular List after delete:");
+
+        circularList.traverse();
+
+        System.out.println("Size of circular list after delete = "+circularList.size());
     }
 }
