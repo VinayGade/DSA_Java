@@ -15,14 +15,14 @@ public class CircularLinkedList {
     }
 
     public int size() {
-        if (isEmpty())
+        if(isEmpty())
             return 0;
         else {
-            int length=0;
+            int length=1;
             CircularNode first = last.next;
 
             //System.out.println("first ");
-            while (first != last) {
+            while(first != last) {
                 //System.out.print(" -> " + first.data);
                 first = first.next;
                 length++;
@@ -37,12 +37,12 @@ public class CircularLinkedList {
         else{
             CircularNode first = last.next;
 
-            System.out.println("first ");
+            System.out.print("\nfirst");
             while(first != last){
-                System.out.print(" -> "+first.data);
+                System.out.print("->"+first.data);
                 first = first.next;
             }
-            System.out.println(first.data+" -> last");
+            System.out.println("->"+first.data+"->last");
         }
     }
 
@@ -60,4 +60,23 @@ public class CircularLinkedList {
 
         last.next = temp;
     }
+
+    public void insertEnd(int data){
+
+        // if Circular list is empty same logic will work to add new node in it
+        // since very first node could be added only at begin
+
+        CircularNode temp = new CircularNode(data);
+
+        if(isEmpty()){
+            last = temp;
+            last.next = last;
+        }
+        else {
+            temp.next = last.next;
+            last.next = temp;
+            last = temp;
+        }
+    }
+
 }
