@@ -20,4 +20,19 @@ public class CircularLinkedList {
         else
             return 1;
     }
+
+    public void traverse(){
+        if(isEmpty())
+            return;
+        else{
+            Node first = last.getNext();
+
+            System.out.println("first ");
+            while(first != last){
+                System.out.print(" -> "+first.getData());
+                first = first.getNext();
+            }
+            System.out.println(first.getData()+" -> last");
+        }
+    }
 }
