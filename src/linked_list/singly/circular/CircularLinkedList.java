@@ -93,8 +93,6 @@ public class CircularLinkedList {
             else
                 last.next = temp.next;
 
-            //temp.next = null;
-            //temp = null;
             return deleted;
         }
     }
