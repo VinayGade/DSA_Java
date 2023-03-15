@@ -94,7 +94,7 @@ public class CircularLinkedList {
                 last.next = temp.next;
 
             //temp.next = null;
-            temp = null;
+            //temp = null;
             return deleted;
         }
     }

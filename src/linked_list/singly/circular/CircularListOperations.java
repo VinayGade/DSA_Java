@@ -16,6 +16,7 @@ public class CircularListOperations {
         circularList.insertBegin(80);
         circularList.insertBegin(50);
         circularList.insertBegin(20);
+        circularList.insertBegin(10);
 
         System.out.println("Size of circular list after insertions = "+circularList.size());
 
