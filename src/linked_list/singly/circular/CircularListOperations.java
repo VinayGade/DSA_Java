@@ -39,5 +39,13 @@ public class CircularListOperations {
         circularList.traverse();
 
         System.out.println("Size of circular list after delete = "+circularList.size());
+
+        System.out.println("\nDeleted last element  : "+circularList.deleteEnd());
+
+        System.out.println("\nTraverse Circular List after delete end:");
+
+        circularList.traverse();
+
+        System.out.println("Size of circular list after delete end = "+circularList.size());
     }
 }
