@@ -18,7 +18,6 @@ public class CountFrequencies {
         Arrays.fill(visited, false);
 
         for(int i=0; i<n; i++){
-
             if(visited[i])
                 continue;
 
@@ -29,8 +28,30 @@ public class CountFrequencies {
                     count++;
                 }
             }
-
             System.out.println(arr[i] + " " + count);
+        }
+    }
+
+    private void frequencies(int [] nums) {
+        int count = 0;
+        int n = nums.length;
+        int[] freuencyList = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            count = 1;
+            for (int j = i + 1; j < n; j++) {
+                if (nums[i] == nums[j]) {
+                    count++;
+                    freuencyList[j] = 0;
+                }
+            }
+            if (freuencyList[i] != 0)
+                freuencyList[i] = count;
+
+            System.out.println("The elements and their occurences are");
+            for (int k = 0; k < nums.length; k++)
+                if (freuencyList[k] >= 1)
+                    System.out.println("Element=" + nums[k] + ", Frequency=" + freuencyList[k]);
         }
     }
 
