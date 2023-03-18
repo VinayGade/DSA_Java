@@ -34,7 +34,7 @@ public class FirstLastOccurance {
         while(i < n){
             if(str.charAt(i) == key){
                 firstI = i;
-                lastI = i;  // since key may occur only once .. i.e. fistI = lastI = i
+                lastI = i;
                 break;
             }
             i++;
