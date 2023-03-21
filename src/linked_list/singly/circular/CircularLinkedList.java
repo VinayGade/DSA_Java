@@ -46,6 +46,20 @@ public class CircularLinkedList {
         }
     }
 
+    public int search(int key){
+        if(!isEmpty()){
+           int index = -1;
+            CircularNode node = last.next;
+            while(node != last){
+                index++;
+                if(key == node.data)
+                    return index;
+                node = node.next;
+            }
+        }
+        return -1;
+    }
+
     public void insertBegin(int data){
 
         // if Circular list is empty same logic will work to add new node in it
@@ -76,6 +90,59 @@ public class CircularLinkedList {
             temp.next = last.next;
             last.next = temp;
             last = temp;
+        }
+    }
+
+    public void insertAt(int index, int data){
+
+        CircularNode temp = new CircularNode(data);
+        if(isEmpty()){
+            last = temp;
+            last.next = last;
+        }
+        else{
+            int i = 0;
+            CircularNode node = last.next;
+
+            while(i<(index-1)){
+                node = node.next;
+                i++;
+            }
+            temp.next = node.next;
+            node.next = temp;
+            /*
+            while(node != last){
+                i++;
+                if(index == (i-1)) {
+                    temp.next = node.next;
+                    node.next = temp;
+                }
+                node = node.next;
+            }
+             */
+        }
+    }
+
+    public void insertAfter(int key, int data){
+        CircularNode temp = new CircularNode(data);
+        if(isEmpty()){
+            last = temp;
+            last.next = last;
+        }else if(last.next == null){
+            last.next = temp;
+            temp.next = last;
+        }else{
+
+            CircularNode node = last.next;
+            while(node != last){
+
+                if(key == node.data){
+
+                    temp.next = node.next;
+                    node.next = temp;
+                }
+                node = node.next;
+            }
         }
     }
 

@@ -48,5 +48,20 @@ public class CircularListOperations {
         circularList.traverse();
 
         System.out.println("Size of circular list after delete end = "+circularList.size());
+
+        System.out.println("\nsearch 80 in circular list  : "+circularList.search(80));
+
+        System.out.println("\ninsert 70 at position 2 in circular list  : ");
+        circularList.insertAt(2, 70);
+
+
+        System.out.println("\ninsert 60 after 50 in circular list  : ");
+        circularList.insertAfter(50, 60);
+
+        System.out.println("\nTraverse Circular List after insertions:");
+
+        circularList.traverse();
+
+        System.out.println("\nsearch 80 in circular list  : "+circularList.search(80));
     }
 }
