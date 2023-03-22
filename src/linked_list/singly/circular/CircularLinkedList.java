@@ -146,6 +146,36 @@ public class CircularLinkedList {
         }
     }
 
+    public int delete(int key){
+        if(isEmpty())
+            return -1;
+        /*
+        else if(last.next == null && last.data!=key)
+            return -1;
+         */
+        else{
+
+            //TODO : fix return index of node instead of data
+            if(last.data==key)
+                return deleteEnd();
+            else if(last.next.data == key)
+                return deleteBegin();
+            int index = -1;
+            CircularNode node = last.next;
+            CircularNode prev = last;
+            while(node != last){
+                index++;
+                if(key == node.data) {
+                    prev.next = node.next;
+                    return index;
+                }
+                prev = node;
+                node = node.next;
+            }
+        }
+        return -1;
+    }
+
     public int deleteBegin(){
         // returns data of deleted element
 

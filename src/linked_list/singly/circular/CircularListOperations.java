@@ -63,5 +63,11 @@ public class CircularListOperations {
         circularList.traverse();
 
         System.out.println("\nsearch 80 in circular list  : "+circularList.search(80));
+
+        System.out.println("\ndelete 60 in circular list  : "+circularList.delete(60));  // 60 50 20
+
+        System.out.println("\nTraverse Circular List after deletion:");
+
+        circularList.traverse();
     }
 }
