@@ -149,28 +149,31 @@ public class CircularLinkedList {
     public int delete(int key){
         if(isEmpty())
             return -1;
-        /*
-        else if(last.next == null && last.data!=key)
-            return -1;
-         */
         else{
-
-            //TODO : fix return index of node instead of data
-            if(last.data==key)
-                return deleteEnd();
-            else if(last.next.data == key)
-                return deleteBegin();
+            //Fixed : fix return index of node instead of data
             int index = -1;
             CircularNode node = last.next;
             CircularNode prev = last;
-            while(node != last){
-                index++;
-                if(key == node.data) {
-                    prev.next = node.next;
-                    return index;
+            if(last.data==key){
+                CircularNode temp = last;
+                //int deleted = last.data;
+                while(temp.next != last){
+                    temp = temp.next;
+                    index++;
                 }
-                prev = node;
-                node = node.next;
+                temp.next = last.next;
+                last = temp;
+                return index;
+            }else {
+                while (node != last) {
+                    index++;
+                    if (key == node.data) {
+                        prev.next = node.next;
+                        return index;
+                    }
+                    prev = node;
+                    node = node.next;
+                }
             }
         }
         return -1;
