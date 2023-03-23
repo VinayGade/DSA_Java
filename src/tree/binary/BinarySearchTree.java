@@ -218,4 +218,23 @@ public class BinarySearchTree {
         return inorder;
     }
 
+    public int parent(TreeNode root, int key){
+        TreeNode child = new TreeNode(key);
+        return findParent(root, child).data;
+    }
+
+    public TreeNode findParent(TreeNode root, TreeNode child){
+        if(root == null || child == null || isLeaf(root))
+            return null;      // since root doesn't have parent. root is parent of entire BST
+        else if( (root.right != null && root.right.data == child.data) ||
+                (root.left != null && root.left.data == child.data) )
+            return root;
+        else{
+            TreeNode found = findParent(root.right, child);
+            if(found == null)
+                found = findParent(root.left, child);
+            return found;
+        }
+    }
+
 }
