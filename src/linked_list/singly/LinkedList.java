@@ -325,4 +325,29 @@ public class LinkedList {
         return slow;
     }
 
+    public Node removeDuplicates(Node head) {
+
+        // do nothing if the list is empty
+        if (head == null) {
+            return null;
+        }
+
+        Node current = head;
+
+        // compare the current node with the next node
+        while (current.next != null)
+        {
+            if (current.data == current.next.data)
+            {
+                Node nextNext = current.next.next;
+                current.next = nextNext;
+            }
+            else {
+                current = current.next;    // only advance if no deletion
+            }
+        }
+
+        return head;
+
+    }
 }
