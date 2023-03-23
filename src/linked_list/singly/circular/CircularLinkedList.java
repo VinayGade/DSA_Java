@@ -154,6 +154,7 @@ public class CircularLinkedList {
             int index = -1;
             CircularNode node = last.next;
             CircularNode prev = last;
+            /*
             if(last.data==key){
                 CircularNode temp = last;
                 //int deleted = last.data;
@@ -164,7 +165,11 @@ public class CircularLinkedList {
                 temp.next = last.next;
                 last = temp;
                 return index;
-            }else {
+            }
+            else
+            {
+             */
+
                 while (node != last) {
                     index++;
                     if (key == node.data) {
@@ -174,6 +179,14 @@ public class CircularLinkedList {
                     prev = node;
                     node = node.next;
                 }
+
+            //TODO : Fixed delete last element and return its index
+            if(last.data==key){
+                ++index;
+                //int deleted = last.data;
+                prev.next = last.next;
+                last = prev;
+                return index;
             }
         }
         return -1;
@@ -202,10 +215,6 @@ public class CircularLinkedList {
         if(isEmpty()){
             System.out.println("Circular List Empty !! cannot delete element...");
             return -1;
-        }else if(last.next == null){
-            int deleted = last.data;
-            last = null;
-            return deleted;
         }else{
             int i = -1;
             CircularNode node = last.next;
@@ -219,6 +228,14 @@ public class CircularLinkedList {
                 }
                 prev = node;
                 node = node.next;
+            }
+
+            //TODO : Fixed delete last element and return its data
+            if(index == ++i){
+                int deleted = last.data;
+                prev.next = last.next;
+                last = prev;
+                return deleted;
             }
             return -1;
         }
