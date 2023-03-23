@@ -49,6 +49,13 @@ public class BST {
         System.out.println("\nparent(2) = "+bst.parent(root, 2));
         System.out.println("\nparent(1) = "+bst.parent(root, 1));
 
+        System.out.println("\nfind sibling of nodes Tree :");
+
+        System.out.println("\nsibling(10) = "+bst.findSibling(root, 10));
+        System.out.println("\nsibling(4) = "+bst.findSibling(root, 4));
+        System.out.println("\nsibling(2) = "+bst.findSibling(root, 2));
+        System.out.println("\nsibling(1) = "+bst.findSibling(root, 1));
+
         System.out.println("\nAfter Delete : Display Tree range (4, 15) :");
         bst.printInRange(root, 4, 15);
         System.out.println("\nSum of Tree range (4, 15) ="+bst.rangeSumBST(root, 4, 15));

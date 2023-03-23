@@ -237,4 +237,29 @@ public class BinarySearchTree {
         }
     }
 
+    public int findSibling(TreeNode root, int key){
+        if(root == null || isLeaf(root))
+            return -1;    // since root can't have sibling, root is parent of entire BST.
+        else{
+            TreeNode leftChild = root.left;
+            TreeNode rightChild = root.right;
+
+            if(leftChild != null && leftChild.data == key)
+                return (rightChild != null) ? rightChild.data : -1;
+
+            else if(rightChild != null && rightChild.data == key)
+                return (leftChild != null) ? leftChild.data : -1;
+
+            //if depth(BST) > 2 ... traverse left and right subtree to find sibling
+
+            int sibling = -1;
+            if(key < root.data  && leftChild != null){
+                sibling = findSibling(leftChild, key);
+            }else if(key > root.data && rightChild != null){
+                sibling = findSibling(rightChild, key);
+            }
+            return sibling;
+        }
+    }
+
 }
