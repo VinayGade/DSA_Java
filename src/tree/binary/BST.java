@@ -32,9 +32,12 @@ public class BST {
 
         System.out.println("\nis Balanced BST ="+bst.isBalanced(root));
 
-        System.out.println("\nLevel Order Traversal BST Before Deletion:");
+        System.out.println("\nLevel Order Traversal BST before Deletion:");
 
         bst.levelOrder(root);
+
+        System.out.println("\nLevel Order Path of BST before Deletion: ");
+        bst.levelOrderPath(root);
 
         System.out.println("\n\nDelete 15, 7 in Tree :");
 
@@ -49,6 +52,9 @@ public class BST {
         System.out.println("\nLevel Order Traversal BST after Deletion:");
 
         bst.levelOrder(root);
+
+        System.out.println("\nLevel Order Path of BST after Deletion: ");
+        bst.levelOrderPath(root);
 
         System.out.println("\n\nfind parent of nodes Tree :");
 
@@ -83,5 +89,7 @@ public class BST {
         System.out.println("\nLeftmost Leaf of BST ="+bst.leftMostLeaf(root).data);
 
         System.out.println("\nRightmost Leaf of BST ="+bst.rightMostLeaf(root).data);
+
+        System.out.println("\nLargest element of BST ="+bst.largest(root).data);
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class BinarySearchTree {
 
@@ -126,7 +127,7 @@ public class BinarySearchTree {
             return leftMostLeaf(root.left);
     }
 
-    public TreeNode largest(TreeNode root){   // left most leaf node
+    public TreeNode largest(TreeNode root){   // right most leaf node
         TreeNode node = root;
         while(node.right!=null){
             node = node.right;
@@ -302,6 +303,18 @@ public class BinarySearchTree {
                 System.out.print("]");
             }
         }
+    }
+
+    public void levelOrderPath(TreeNode root){
+
+        if(root != null && isLeaf(root))
+            System.out.print(root.data);
+
+        List<Integer> path = levelOrderTraversal(root).stream()
+                .flatMap(list -> list.stream())
+                .collect(Collectors.toList());
+
+        path.forEach(element -> System.out.print(element+" "));
     }
 
     public List<List<Integer>> levelOrderTraversal(TreeNode root) {
