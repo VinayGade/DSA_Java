@@ -1,7 +1,9 @@
 package tree.binary;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class BinarySearchTree {
 
@@ -11,9 +13,11 @@ public class BinarySearchTree {
         root = null;
     }
 
+    /*
     public BinarySearchTree(int data){
         root = new TreeNode(data);
     }
+     */
 
     public boolean isLeaf(TreeNode node){
         return node.left == null && node.right == null;
@@ -32,27 +36,44 @@ public class BinarySearchTree {
         if(root == null)
             return false;
 
-        if(root.data == key){
+        if(root.data == key)
             return true;
-        } else if(root.data > key){
+        else if(root.data > key)
             return search(root.left, key);
-        }else/* if(root.data < key) */{
+        else/* if(root.data < key) */
             return search(root.right, key);
-        }
-
     }
 
     public TreeNode insert(TreeNode root, int data) {
 
-        if(root == null){
+        if(root == null)
             root = new TreeNode(data);
 
-        }else if(data < root.data){
+        else if(data < root.data)
             root.left = insert(root.left, data);
-        }else{
+        else
             root.right = insert(root.right, data);
-        }
+
         return root;
+    }
+
+    // insert TreeNode solution by HackerRank
+    public static TreeNode insertTreeNode(TreeNode root,int data){
+        if(root==null)
+            return new TreeNode(data);
+
+        else{
+            TreeNode cur;
+            if(data<=root.data){
+                cur=insertTreeNode(root.left,data);
+                root.left=cur;
+            }
+            else{
+                cur=insertTreeNode(root.right,data);
+                root.right=cur;
+            }
+            return root;
+        }
     }
 
     public TreeNode delete(TreeNode root, int key){
@@ -147,8 +168,8 @@ public class BinarySearchTree {
 
     public int  rangeSumBST(TreeNode root, int x, int y) {
 
-        int rangeSum =  0;
-        if(root != null) {
+        int rangeSum = 0;
+        if (root != null) {
 
         /*
         else if(isLeaf(root))
@@ -156,16 +177,16 @@ public class BinarySearchTree {
 
          */
 
-        //else{
-                if (root.data >= x && root.data <= y) {
-                    rangeSum += rangeSumBST(root.left, x, y);
-                    rangeSum += root.data;
-                    rangeSum += rangeSumBST(root.right, x, y);
-                } else if (root.data >= y) {  // ... traverse left subtree
-                    rangeSum += rangeSumBST(root.left, x, y);
-                } else {  // root.data <= x   ... traverse right subtree
-                    rangeSum += rangeSumBST(root.right, x, y);
-                }
+            //else{
+            if (root.data >= x && root.data <= y) {
+                rangeSum += rangeSumBST(root.left, x, y);
+                rangeSum += root.data;
+                rangeSum += rangeSumBST(root.right, x, y);
+            } else if (root.data >= y) {  // ... traverse left subtree
+                rangeSum += rangeSumBST(root.left, x, y);
+            } else {  // root.data <= x   ... traverse right subtree
+                rangeSum += rangeSumBST(root.right, x, y);
+            }
             //}
         }
         return rangeSum;
@@ -220,7 +241,8 @@ public class BinarySearchTree {
 
     public int parent(TreeNode root, int key){
         TreeNode child = new TreeNode(key);
-        return findParent(root, child).data;
+        TreeNode parent = findParent(root, child);
+        return parent!=null ? parent.data : -1;
     }
 
     public TreeNode findParent(TreeNode root, TreeNode child){
@@ -253,13 +275,57 @@ public class BinarySearchTree {
             //if depth(BST) > 2 ... traverse left and right subtree to find sibling
 
             int sibling = -1;
-            if(key < root.data  && leftChild != null){
+
+            if(key < root.data  && leftChild != null)
                 sibling = findSibling(leftChild, key);
-            }else if(key > root.data && rightChild != null){
+
+            else if(key > root.data && rightChild != null)
                 sibling = findSibling(rightChild, key);
-            }
+
             return sibling;
         }
     }
 
+    public void levelOrder(TreeNode root){
+
+        if(root != null && isLeaf(root))
+            System.out.print(root.data);
+        else{
+            List<List<Integer>> result = levelOrderTraversal(root);
+            int depth = -1;
+            for(List<Integer> level : result){
+                depth++;
+                System.out.print("\nlevel ["+depth+"] = [ ");
+                for(int element : level){
+                    System.out.print(element+" ");
+                }
+                System.out.print("]");
+            }
+        }
+    }
+
+    public List<List<Integer>> levelOrderTraversal(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            List<Integer> level = new ArrayList<>();
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                level.add(node.data);
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            result.add(level);
+        }
+        return result;
+    }
 }
