@@ -238,7 +238,7 @@ public class BinarySearchTree {
     }
 
     public int findSibling(TreeNode root, int key){
-        if(root == null || isLeaf(root))
+        if(root == null || root.data==key || isLeaf(root))
             return -1;    // since root can't have sibling, root is parent of entire BST.
         else{
             TreeNode leftChild = root.left;
