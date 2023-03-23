@@ -346,8 +346,6 @@ public class LinkedList {
                 current = current.next;    // only advance if no deletion
             }
         }
-
         return head;
-
     }
 }
