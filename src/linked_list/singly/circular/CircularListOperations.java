@@ -69,5 +69,11 @@ public class CircularListOperations {
         System.out.println("\nTraverse Circular List after deletion:");
 
         circularList.traverse();
+
+        System.out.println("\ndelete element at index 3 from circular list  : "+circularList.deleteAt(3));
+
+        System.out.println("\nTraverse Circular List after deletion:");
+
+        circularList.traverse();
     }
 }
