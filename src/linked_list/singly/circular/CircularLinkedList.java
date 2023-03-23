@@ -165,20 +165,18 @@ public class CircularLinkedList {
                 temp.next = last.next;
                 last = temp;
                 return index;
-            }
-            else
-            {
+            }else{
              */
 
-                while (node != last) {
-                    index++;
-                    if (key == node.data) {
-                        prev.next = node.next;
-                        return index;
-                    }
-                    prev = node;
-                    node = node.next;
+            while (node != last) {
+                index++;
+                if (key == node.data) {
+                    prev.next = node.next;
+                    return index;
                 }
+                prev = node;
+                node = node.next;
+            }
 
             //TODO : Fixed delete last element and return its index
             if(last.data==key){
