@@ -16,7 +16,8 @@ public class ReverseString {
     }
 
     // iterative approach to reverse string
-    private void reverseIterative(char[] c){
+    private char[] reverseIterative(char[] c){
+        //char[] reverse = new char[c.length];
         int n = c.length;
         int i = 0;
         int j = n - 1;
@@ -25,6 +26,7 @@ public class ReverseString {
             i++;
             j--;
         }
+        return c;
     }
 
     public static void main(String[] args) {
@@ -38,6 +40,17 @@ public class ReverseString {
         String reverse = new String(c);
 
         System.out.print("Reverse of the given string : "+source+" = " +reverse);
+
+        System.out.print("\nReverse string iterative : "+source+" = ");
+
+        char[] rev = reverseString.reverseIterative(c);
+
+        String solution="";
+        for(char ch: rev){
+            solution=solution+ch;
+        }
+
+        System.out.println(solution);
     }
 
 }
