@@ -1,9 +1,6 @@
 package tree.binary;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BinarySearchTree {
@@ -20,8 +17,32 @@ public class BinarySearchTree {
     }
      */
 
+    public boolean isEmpty(TreeNode root){
+        return root == null;
+    }
+    
     public boolean isLeaf(TreeNode node){
         return node.left == null && node.right == null;
+    }
+
+    public int countChildren(TreeNode node) {
+        if(isLeaf(node))
+            return 0;
+        else if(node.left != null && node.right != null)
+            return 2;
+        else
+            return 1;
+    }
+
+    public Set<TreeNode> children(TreeNode node){
+        Set<TreeNode> childNodes= new LinkedHashSet<>();  // maintain order ... leftChild, rightChild
+        if(!isLeaf(node)){
+            if(node.left != null)
+                childNodes.add(node.left);
+            if(node.right != null)
+                childNodes.add(node.right);
+        }
+        return childNodes;
     }
 
     public void inOrderTraversal(TreeNode root){
@@ -253,10 +274,10 @@ public class BinarySearchTree {
                 (root.left != null && root.left.data == child.data) )
             return root;
         else{
-            TreeNode found = findParent(root.right, child);
-            if(found == null)
-                found = findParent(root.left, child);
-            return found;
+            TreeNode parent = findParent(root.right, child);
+            if(parent == null)
+                parent = findParent(root.left, child);
+            return parent;
         }
     }
 

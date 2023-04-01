@@ -1,5 +1,8 @@
 package tree.binary;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class BST {
     public static void main(String[] args) {
         int [] values = {5,1 ,3, 4, 2, 7, 10, 12, 15, 20};
@@ -74,6 +77,14 @@ public class BST {
         System.out.println("\nsibling(20) = "+bst.findSibling(root, 20));
         System.out.println("\nsibling(3) = "+bst.findSibling(root, 3));
         System.out.println("\nsibling(12) = "+bst.findSibling(root, 12));
+
+        System.out.println("\nChildren of nodes in Tree :");
+
+        Set<TreeNode> children = bst.children(root);
+        System.out.println("\nchildren(5) = ");
+        children.forEach(node -> System.out.print(" "+node.data));
+
+        System.out.println("\ncount children(12) = "+bst.countChildren(new TreeNode(12)));
 
         System.out.println("\nAfter Delete : Display Tree range (4, 15) :");
         bst.printInRange(root, 4, 15);

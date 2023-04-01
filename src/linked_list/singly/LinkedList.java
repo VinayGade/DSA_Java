@@ -335,16 +335,11 @@ public class LinkedList {
         Node current = head;
 
         // compare the current node with the next node
-        while (current.next != null)
-        {
+        while (current.next != null) {
             if (current.data == current.next.data)
-            {
-                Node nextNext = current.next.next;
-                current.next = nextNext;
-            }
-            else {
+                current.next = current.next.next;
+            else
                 current = current.next;    // only advance if no deletion
-            }
         }
         return head;
     }
