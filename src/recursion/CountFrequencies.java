@@ -55,8 +55,8 @@ public class CountFrequencies {
         }
     }
 
-    // Map<number, frequency> ... efficient solution,  Time Complexity : O(N)
-    public Map<Integer, Integer> frequencyMap(int [] arr){
+    //Java 7: Map<number, frequency> ... efficient solution,  Time Complexity : O(N)
+    public Map<Integer, Integer> frequencyMapOld(int [] arr){
 
         Map<Integer, Integer> numberFrequencyMap= new LinkedHashMap<>();
 
@@ -67,6 +67,17 @@ public class CountFrequencies {
             else
                 numberFrequencyMap.put(arr[i], 1);
         }
+        return numberFrequencyMap;
+    }
+
+    // java 8 : Optimized code,  Time Complexity : O(N)
+    public Map<Integer, Integer> frequencyMap(int [] arr){
+
+        Map<Integer, Integer> numberFrequencyMap= new LinkedHashMap<>();
+
+        for(int i : arr)
+            numberFrequencyMap.put(i, numberFrequencyMap.getOrDefault(i, 0) + 1);
+
         return numberFrequencyMap;
     }
 
