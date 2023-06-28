@@ -9,7 +9,6 @@ public class QuickSortGPT {
     public static void quickSort(int[] arr, int low, int high) {
         if (low < high) {
             int pivotIndex = partition(arr, low, high);
-
             quickSort(arr, low, pivotIndex - 1);
             quickSort(arr, pivotIndex + 1, high);
         }
@@ -18,7 +17,6 @@ public class QuickSortGPT {
     public static int partition(int[] arr, int low, int high) {
         int pivot = arr[high];
         int i = low - 1;
-
         for (int j = low; j < high; j++) {
             if (arr[j] <= pivot) {
                 i++;
@@ -27,7 +25,6 @@ public class QuickSortGPT {
         }
 
         swap(arr, i + 1, high);
-
         return i + 1;
     }
 
@@ -39,9 +36,7 @@ public class QuickSortGPT {
 
     public static void main(String[] args) {
         int[] arr = {5, 2, 8, 12, 3, 7};
-
         quickSort(arr);
-
         for (int num : arr) {
             System.out.print(num + " ");
         }
