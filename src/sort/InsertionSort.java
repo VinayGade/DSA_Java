@@ -39,7 +39,7 @@ public class InsertionSort {
             int j = i-1;
 
             while(j>=0 && temp < a[j]){  //(2)
-                a[j+1] = a[j];
+                a[j+1] = a[j];  // right shift array
                 j--;
             }
 
