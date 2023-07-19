@@ -29,10 +29,8 @@ public class CircularQ {
                 return;
             }
             //if it's the 1st element
-            if(front == -1) {
+            if(front == -1)
                 front = 0;
-            }
-
 
             rear = (rear + 1)%size;
             arr[rear] = data;
@@ -66,6 +64,12 @@ public class CircularQ {
 
             return arr[front];
         }
+
+        public void clear(Queue q){
+            while(!q.isEmpty()) {
+                System.out.println(q.remove());
+            }
+        }
     }
     public static void main(String args[]) {
         Queue q = new Queue(5);
@@ -74,15 +78,22 @@ public class CircularQ {
         q.add(3);
         q.add(4);
         q.add(5);
+        System.out.println("front of queue = "+q.peek());
+
+        System.out.println("remove from queue = ");
         System.out.println(q.remove());
+
+        System.out.println("add 6 to queue = ");
         q.add(6);
+
+        System.out.println("remove from queue = ");
         System.out.println(q.remove());
+
+        System.out.println("add 7 to queue = ");
         q.add(7);
 
-
-        while(!q.isEmpty()) {
-            System.out.println(q.remove());
-        }
+        System.out.println("clear complete queue = ");
+        q.clear(q);
     }
 }
 

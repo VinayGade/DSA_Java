@@ -60,7 +60,7 @@ public class MergeSort2 extends CommonUtility{
         }
 
         while(j < n2){
-            arr[k] = L[j];
+            arr[k] = M[j];
             j++;
             k++;
         }

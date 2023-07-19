@@ -1,6 +1,6 @@
 package sort;
 
-public class QuickSort extends CommonUtility{
+public class    QuickSort extends CommonUtility{
 
     public void quickSort(int[] array, int low, int high){
         if(low < high){
