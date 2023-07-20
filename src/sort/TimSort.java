@@ -6,8 +6,8 @@ public class TimSort extends CommonUtility{
 
     public static void main(String[] args) {
 
-        int[] arr = { -2, 7,  15,  -14, 0, 15,  0, 7,
-                -7, -4, -13, 5,   8, -14, 12 };
+        int[] arr = { -2, 7,  100,  -12, 0, 50, 6, 1, 9, -80, -200, -89, 512, 1024, 10, 1630, 1857, 1307,
+                -7, -4, -13, 5, 8, -14, 12, 200, 240, 420, 360};
         int n = arr.length;
         System.out.println("Given Array is");
 
@@ -21,6 +21,7 @@ public class TimSort extends CommonUtility{
         timSort.display(arr);
     }
 
+    /*
     public static int minRunLength(int n)
     {
         assert n >= 0;
@@ -33,7 +34,31 @@ public class TimSort extends CommonUtility{
         }
         return n + r;
     }
+     */
 
+    public static void timSort(int arr[], int n)
+    {
+
+        for (int i = 0; i < n; i += MIN_MERGE)
+            insertionSort(arr, i, Math.min((i + 31),
+                    (n - 1)));
+
+        for (int size = MIN_MERGE; size < n;
+             size = 2 * size)
+        {
+
+            for (int left = 0; left < n;
+                 left += 2 * size)
+            {
+                int mid = left + size - 1;
+                int right = Math.min((left + 2 * size - 1), (n - 1));
+
+                merge(arr, left, mid, right);
+            }
+        }
+    }
+
+    /*
     // Iterative Timsort function to sort the
     // array[0...n-1] (similar to merge sort)
     public static void timSort(int[] arr, int n)
@@ -77,6 +102,7 @@ public class TimSort extends CommonUtility{
             }
         }
     }
+     */
 
     public static void insertionSort(int[] a, int left, int right){
 
