@@ -40,16 +40,12 @@ public class TimSort extends CommonUtility{
     {
 
         for (int i = 0; i < n; i += MIN_MERGE)
-            insertionSort(arr, i, Math.min((i + 31),
-                    (n - 1)));
+            insertionSort(arr, i, Math.min((i + 31), (n - 1)));
 
-        for (int size = MIN_MERGE; size < n;
-             size = 2 * size)
-        {
+        for (int size = MIN_MERGE; size < n; size = 2 * size) {
 
-            for (int left = 0; left < n;
-                 left += 2 * size)
-            {
+            for (int left = 0; left < n; left += 2 * size) {
+
                 int mid = left + size - 1;
                 int right = Math.min((left + 2 * size - 1), (n - 1));
 
@@ -115,6 +111,7 @@ public class TimSort extends CommonUtility{
             }
             a[j+1]=temp;
             //i++;
+            //right part is sorted hence don't move i'th pointer.
         }
     }
 
