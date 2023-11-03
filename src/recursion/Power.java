@@ -88,6 +88,68 @@ public class Power {
         return pow;
     }
 
+    // method 1: recursion
+
+    public int powerRecursive(int x, int n){
+        if(n==0)
+            return 1;
+        else if(x==0)
+            return 0;
+        else
+            return powerRecursive(x, n-1);
+    }
+
+    //method 2: Divide and Conquer
+    public int powerDnC(int x, int n){
+        if(n==0)
+            return 1;
+        else{
+            int y = powerDnC(x, n/2);
+            if(n%2==0)
+                return y*y;
+            else
+                return x*y*y;
+        }
+        /*
+        else if(n%2==0)
+            return powerDnC(x, n/2) * powerDnC(x, n/2);
+        else
+            return x * powerDnC(x, n/2) * powerDnC(x, n/2);
+         */
+    }
+
+    //method 3 : Extend the pow function to work for negative n and float x
+    static float realPower(float x, int n){
+
+        float y;
+        if (n == 0)
+            return 1;
+        y = realPower(x, n / 2);
+
+        if (n % 2 == 0)
+            return y * y;
+        else {
+            if (n > 0)
+                return x * y * y;
+            else
+                return (y * y) / x;
+        }
+    }
+
+    //method 4 : using Binary operators:
+    static int binaryPower(int x, int n){
+        int result = 1;
+        while (n > 0) {
+            if (n % 2 != 0) // y is odd{
+                result = result * x;
+
+            x = x * x;
+            n = n >> 1;
+            // y=y/2;
+        }
+        return result;
+    }
+
     public int factorial(int n){
 
         if( n == 0 || n == 1 )

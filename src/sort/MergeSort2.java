@@ -1,8 +1,11 @@
 package sort;
 
-public class MergeSort2 extends CommonUtility{
+import sort.common.CommonUtility;
+
+public class MergeSort2 extends CommonUtility {
 
     // Divide the array into two sub-arrays, sort them and merge them
+    // Better time and space complexity than merge sort with auxiliary (copy) array
     public void mergeSort(int[] arr, int l, int r){
 
         if (l < r) {

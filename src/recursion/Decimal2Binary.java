@@ -46,4 +46,13 @@ public class Decimal2Binary {
         decimalToBinary(number >> 1);
         System.out.print(remainder);
     }
+
+    public static String decimalToBinaryString(int decimal) {
+        String binary = "";
+        while (decimal > 0) {
+            binary = (decimal % 2) + binary;
+            decimal = decimal / 2;
+        }
+        return binary;
+    }
 }

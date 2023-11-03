@@ -1,6 +1,8 @@
 package sort;
 
-public class TimSort extends CommonUtility{
+import sort.common.CommonUtility;
+
+public class TimSort extends CommonUtility {
 
     static int MIN_MERGE = 32;
 

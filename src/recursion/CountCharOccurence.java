@@ -5,6 +5,15 @@ import java.util.Map;
 
 public class CountCharOccurence {
 
+    private int charOccurence(String S, char c, int i){
+
+        if (i >= S.length())
+            return 0;
+
+        int count = S.charAt(i) == c ? 1 : 0;
+        return count + charOccurence(S, c, i+1);
+    }
+
     public int[] charFrequency( String str){
 
         int i=0;
@@ -39,7 +48,13 @@ public class CountCharOccurence {
     public static void main(String[] args) {
         String str = "java se 8 lambda expression";
 
+        char key = 'a';
+
         CountCharOccurence freq = new CountCharOccurence();
+
+        int frequencyKey = freq.charOccurence(str, key, 0);
+
+        System.out.println("char :"+key+", frequency = "+frequencyKey);
 
         int[] frequencyArr = freq.charFrequency(str);
 

@@ -98,6 +98,21 @@ public class BinarySearchTree {
         }
     }
 
+    // insert TreeNode solution by GFG
+    TreeNode insertNode(TreeNode root, int key) {
+
+        if(root == null){
+            root = new TreeNode(key);
+            return root;
+        }
+        if(key < root.data)
+            root.left =  insertNode(root.left, key);
+        else if(key > root.data)
+            root.right =  insertNode(root.right, key);
+
+        return root;
+    }
+
     public TreeNode delete(TreeNode root, int key){
         if(key < root.data)
             root.left = delete(root.left, key);
@@ -188,6 +203,26 @@ public class BinarySearchTree {
         }
     }
 
+    // printInRange GFG solution
+    public static ArrayList<Integer> printNearNodes(TreeNode root, int low, int high){
+
+        ArrayList<Integer> range = new ArrayList<Integer>();
+        inorderRange(root, low, high, range);
+        return range;
+    }
+
+    static void inorderRange(TreeNode root,int low,int high, ArrayList<Integer> range){
+        if(root==null)
+            return;
+
+        inorderRange(root.left,low,high, range);
+
+        if(root.data>=low && root.data<=high)
+            range.add(root.data);
+
+        inorderRange(root.right, low, high, range);
+    }
+
     public int  rangeSumBST(TreeNode root, int x, int y) {
 
         int rangeSum = 0;
@@ -237,6 +272,21 @@ public class BinarySearchTree {
                     && isBalanced(root.right);
     }
 
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+
+        if(isLeaf(root) && subRoot.data == root.data)
+            return true;
+        else{
+            List<Integer> inorder = inorderTraversal(root);
+            if(isLeaf(subRoot))
+                return inorder.contains(subRoot.data);
+            else{
+                List<Integer> inorderSubtree = inorderTraversal(subRoot);
+                return inorder.containsAll(inorderSubtree);
+            }
+        }
+    }
+
     public boolean isValidBST(TreeNode root) {
 
         if(root == null)
@@ -259,6 +309,20 @@ public class BinarySearchTree {
             inorderTraversal(root.right);
         }
         return inorder;
+    }
+
+    //Function to find the lowest common ancestor in a BST.
+    TreeNode LCA(TreeNode root, int n1, int n2) {
+
+        if(n1 < root.data && n2 < root.data)
+            return LCA(root.left, n1, n2);
+
+        else if(n1 > root.data && n2 > root.data)
+            return LCA(root.right, n1, n2);
+
+        else
+            return root;
+
     }
 
     public int parent(TreeNode root, int key){

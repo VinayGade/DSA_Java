@@ -42,6 +42,56 @@ public class DoublyLinkedList {
         return loc;
     }
 
+    public boolean contains(int key){
+
+        //int count = 0;
+        if(!isEmpty()){
+
+            DoublyLinkedNode temp1=first;
+            DoublyLinkedNode temp2=last;
+
+            int n1 = -1;
+            int n2 = -1;
+            while(temp2.data != n1){
+
+                n1=temp1.data;
+                n2=temp2.data;
+                if(n1 == n2)
+                    return n1==key;
+                if(n1==key || n2==key)
+                    return true;
+                temp1=temp1.next;
+                temp2=temp2.prev;
+            }
+        }
+        return false;
+    }
+
+    public int size(){
+
+        int count = 0;
+        if(!isEmpty()){
+
+            DoublyLinkedNode temp1=first;
+            DoublyLinkedNode temp2=last;
+
+            int n1 = -1;
+            //int n2 = -1;
+            while(temp2.data != n1){
+
+                n1=temp1.data;
+                if(n1 == temp2.data)
+                    return ++count;
+
+                //n2=temp2.data;
+                temp1=temp1.next;
+                temp2=temp2.prev;
+                count+=2;
+            }
+        }
+        return count;
+    }
+
     public void display(){
         System.out.println("\n Display elements in DLL :\n");
         if(!isEmpty()) {
@@ -66,6 +116,20 @@ public class DoublyLinkedList {
                 }
             }
         }
+    }
+
+    public int kthFromLast(int k){
+        int i = 1;
+        int element = -1;
+        DoublyLinkedNode temp = last;
+        while (temp.prev != null){
+            if(i==k) {
+                element = temp.data;
+                break;
+            }
+            temp = temp.prev;
+        }
+        return element;
     }
 
     public void insertBegin(int data){
@@ -114,6 +178,53 @@ public class DoublyLinkedList {
             last = last.prev;
             last.next = null;
         }
+    }
+
+    // delete node at given index ...index is 1 based (1,2,3,...)
+    // returns data of deleted node
+    public int deleteAt(int index){
+
+        if(isEmpty())
+            return -1;
+        else{
+            int loc = 1;
+            int key = first.data;
+
+            if(first == last && index == 1){  // remove first of list
+                first = first.next;
+                first.prev = null;
+                return key;
+            }
+            DoublyLinkedNode temp = first;
+            DoublyLinkedNode prev = null;
+            while (temp!=null){
+                if(loc == index){
+                    key = temp.data;
+                    prev = temp.prev;
+                    if(temp.next == null){   //last node
+
+                        prev.next = null;
+                        temp.prev = null;
+                        temp = null;
+                        break;
+                    }
+                    temp.prev.next = temp.next;
+                    temp.next.prev = temp.prev;
+
+                    /*
+                    temp.next
+                    temp.prev
+                    temp.next.prev
+                    temp.prev.next
+                    */
+                    break;
+                }
+                temp = temp.next;
+                loc++;
+            }
+            return key;
+        }
+
     }
 
     public int delete(int key){
@@ -189,4 +300,5 @@ public class DoublyLinkedList {
             t = t.next;
         }
     }
+
 }

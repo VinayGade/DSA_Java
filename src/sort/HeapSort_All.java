@@ -1,8 +1,10 @@
 package sort;
 
+import sort.common.CommonUtility;
+
 import java.util.Scanner;
 
-public class HeapSort_All extends CommonUtility{
+public class HeapSort_All extends CommonUtility {
 
     /*
     private int parent( int i){
