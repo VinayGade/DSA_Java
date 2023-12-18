@@ -2,10 +2,7 @@ package linked_list.singly;
 
 import linked_list.doubly.DoublyLinkedNode;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class LinkedList {
 
@@ -496,6 +493,19 @@ public class LinkedList {
         return slow;
     }
 
+    Node deleteMid(Node head) {
+        if(head.next==null)
+            return null;
+        Node slow=head;
+        Node fast=head;
+        while(fast.next.next!=null && fast.next.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        slow.next=slow.next.next;
+        return head;
+    }
+
     public Node removeDuplicates(Node head) {
 
         // do nothing if the list is empty
@@ -751,6 +761,44 @@ public class LinkedList {
             }
         }
         return 0;
+    }
+
+    //Function to remove a loop in the linked list.
+    public static void removeLoop(Node head){
+        Node temp=head;
+        Node temp1=head;
+
+        Map<Node,Integer> map=new LinkedHashMap<Node,Integer>();
+        while(temp!= null){
+            if(!map.containsKey(temp)){
+                map.put(temp,1);
+            }
+            else{
+                temp1.next=null;
+                break;
+            }
+            temp1=temp;
+            temp=temp.next;
+        }
+    }
+
+    public static void removeCycle(Node head) {
+        Node first = head.next;
+        Node second = head;
+        Node previous = null;
+        boolean flag = false;
+        while (first.next != null && first.next.next != null) {
+            if (first == second) {
+                flag = true;
+            }
+            if (flag && head == second) {
+                previous.next = null;
+            }
+            if (flag) head = head.next;
+            first = first.next.next;
+            previous = second;
+            second = second.next;
+        }
     }
 
     // Leetcode 1019. Next Greater Node In Linked List.
