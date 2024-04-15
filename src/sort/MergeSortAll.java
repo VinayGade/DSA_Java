@@ -23,6 +23,7 @@ public class MergeSortAll {
         selectMergeSort(arr, choice);
     }
 
+    //LeetCode 912. Sort an Array
     public static void selectMergeSort(int[] arr, int choice){
 
         int low = 0;

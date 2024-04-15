@@ -426,4 +426,36 @@ public class BinarySearchTree {
         }
         return result;
     }
+
+    // LeetCode 543: Diameter of Binary Tree
+    /*
+    * The diameter of a binary tree is the length of the longest path between any two nodes in a tree.
+    * This path may or may not pass through the root.
+    * */
+    public int diameterOfBinaryTree(TreeNode root) {
+        Map<TreeNode, Integer> depthMap = new HashMap<>();
+        Stack<TreeNode> visited = new Stack<>();
+        int diameter = 0;
+
+        if(root!=null)
+            visited.push(root);
+
+        while(!visited.isEmpty()){
+
+            TreeNode node = visited.peek();
+
+            if(node.left!=null && !depthMap.containsKey(node.left))
+                visited.push(node.left);
+            if(node.right!=null && !depthMap.containsKey(node.right))
+                visited.push(node.right);
+
+            visited.pop();
+            int leftDepth = depthMap.getOrDefault(node.left, 0);
+            int rightDepth = depthMap.getOrDefault(node.right, 0);
+
+            depthMap.put(node, 1 + Math.max(leftDepth, rightDepth));
+            diameter = Math.max(diameter, leftDepth + rightDepth);
+        }
+        return diameter;
+    }
 }

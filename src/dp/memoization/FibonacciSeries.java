@@ -1,6 +1,4 @@
-package dp;
-
-import java.util.Arrays;
+package dp.memoization;
 
 public class FibonacciSeries {
 
@@ -41,6 +39,39 @@ public class FibonacciSeries {
         return fibonacci[n];
     }
 
+    //Function to find the nth fibonacci number using bottom-up approach (tabulation).
+    public long findNthFibonacci(int number)
+    {
+        if(number<=1)
+            return number;
+
+        long prev2=0;
+        long prev1=1;
+
+        for(int i=2;i<=number;i++){
+            long curr=prev2+prev1;
+            prev2=prev1;
+            prev1=curr;
+
+        }
+        return prev1;
+    }
+
+    //Function to find the nth fibonacci number using top-down approach.
+    public long findNthFibonacciMemoization(int number, long[] fibo)
+    {
+        //base case for recursion.
+        if(fibo[number]>0)
+            return fibo[number];
+
+        //making recursive calls for previous two values in dp.
+        fibo[number] = findNthFibonacciMemoization(number-1, fibo) +
+                findNthFibonacciMemoization(number-2, fibo);
+
+        //returning the nth fibonacci number.
+        return fibo[number];
+    }
+
     public int fibonacciRecursive(int n) {
         if (n < 2)
             return n;
@@ -57,6 +88,10 @@ public class FibonacciSeries {
 
         FibonacciSeries topDownSeries = new FibonacciSeries();
         int result = topDownSeries.fibonacciMemoization(n);
-        System.out.print(" "+result);
+
+        long nthFibonacci = topDownSeries.findNthFibonacci(n);
+        System.out.print("result= "+result);
+
+        System.out.print("nthFibonacci= "+nthFibonacci);
     }
 }

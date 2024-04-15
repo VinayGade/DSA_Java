@@ -102,5 +102,7 @@ public class BST {
         System.out.println("\nRightmost Leaf of BST ="+bst.rightMostLeaf(root).data);
 
         System.out.println("\nLargest element of BST ="+bst.largest(root).data);
+
+        System.out.println("\nDiameter of BST = "+bst.diameterOfBinaryTree(root));
     }
 }
