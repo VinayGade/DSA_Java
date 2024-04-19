@@ -458,4 +458,40 @@ public class BinarySearchTree {
         }
         return diameter;
     }
+
+    //LeetCode 113. Path Sum II
+    /*
+    Given the root of a binary tree and an integer targetSum, return all root-to-leaf
+    paths where the sum of the node values in the path equals targetSum.
+    Each path should be returned as a list of the node values, not node references.
+    * */
+    public List<List<Integer>> pathSumII(TreeNode root, int targetSum) {
+        List<List<Integer>> result = new ArrayList<>();
+        pathSumII(root, targetSum, new ArrayList<>(), result);
+        return result;
+    }
+
+    void pathSumII(TreeNode root, int sum, List<Integer> path, List<List<Integer>> result){
+        if(root == null)
+            return;
+        path.add(root.data);
+        if(root.left == null && root.right == null && root.data == sum)
+            result.add(path);
+
+        pathSumII(root.left, sum-root.data, new ArrayList<>(path), result);
+        pathSumII(root.right, sum-root.data, new ArrayList<>(path), result);
+    }
+
+    //Optimized approach
+    void pathSum(TreeNode root, int sum, List<Integer> path, List<List<Integer>> result){
+        if(root == null)
+            return;
+        path.add(root.data);
+        if(root.left == null && root.right == null && root.data == sum)
+            result.add(new ArrayList<>(path));
+
+        pathSum(root.left, sum-root.data, path, result);
+        pathSum(root.right, sum-root.data, path, result);
+        path.remove(path.size()-1);
+    }
 }
