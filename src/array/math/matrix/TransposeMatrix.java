@@ -1,4 +1,4 @@
-package array.math.twod;
+package array.math.matrix;
 
 /*  LeetCode 867:
 Given a 2D integer array matrix, return the transpose of matrix.
