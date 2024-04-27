@@ -494,4 +494,48 @@ public class BinarySearchTree {
         pathSum(root.right, sum-root.data, path, result);
         path.remove(path.size()-1);
     }
+
+    // LeetCode 103. Binary Search Tree Zigzag Level Order Traversal
+    List<List<Integer>> zigZagLevelOrder(TreeNode root){
+
+        List<List<Integer>> zigzag = new ArrayList<>();
+        if(root == null)
+            return zigzag;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        boolean flag = false;
+
+        while(!queue.isEmpty()){
+
+            int size = queue.size();
+            List<Integer> level = new ArrayList<>();
+            Stack<Integer> reverseStack = new Stack<>();
+
+            for(int i=0; i<size; i++){
+
+                TreeNode node = queue.poll();
+
+                // check flag
+                if(flag)
+                    reverseStack.push(node.data);
+                else
+                    level.add(node.data);
+
+                if(node.left != null)
+                    queue.add(node.left);
+
+                if(node.right != null)
+                    queue.add(node.right);
+            }
+            flag = !flag;
+
+            // Pop all elements from stack
+            while(!reverseStack.isEmpty())
+                level.add(reverseStack.pop());
+
+            zigzag.add(level);
+        }
+        return zigzag;
+    }
 }
