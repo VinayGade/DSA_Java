@@ -1,4 +1,4 @@
-package hashing;
+package array.math;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -62,6 +62,7 @@ public class CaesarCipher {
         return encrypted;
     }
 
+    /*
     public static LinkedHashMap<Character, Character> encryption(String source, int key){
 
         char[] plainText = source.toCharArray();
@@ -86,4 +87,5 @@ public class CaesarCipher {
         }
         return null;
     }
+     */
 }
