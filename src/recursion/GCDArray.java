@@ -46,6 +46,17 @@ public class GCDArray {
         return gcd(b, a % b);
     }
 
+    public int GCD(int N , int arr[])
+    {
+        for(int i=1; i<N; i++)
+            arr[i] = hcf(arr[i-1], arr[i]);
+        return arr[N-1];
+    }
+
+    int hcf(int a , int b){
+        return (b==0) ? a : hcf(b, a%b);
+    }
+
     public static void main(String[] args) {
         int[] nums = {2,5,6,9,10};
         int[] nums2 = {7,5,6,8,3};
