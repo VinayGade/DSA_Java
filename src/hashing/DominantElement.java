@@ -33,13 +33,13 @@ public class DominantElement {
 
     static String dominantElement(Map<Integer, Integer> map){
         int maxFrequency = 1;
-        int max = 0;
+        //int max = 0;
         for(Map.Entry<Integer, Integer> entry: map.entrySet()){
             int frequency = entry.getValue();
             if(maxFrequency < frequency){
                 //maxFrequency = Math.max(max, entry.getValue())
                 maxFrequency = frequency;
-                max = entry.getKey();
+                //max = entry.getKey();
             }
         }
         //int[] pair ={max, maxFrequency};
