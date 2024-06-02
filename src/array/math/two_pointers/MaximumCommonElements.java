@@ -30,7 +30,7 @@ output:
 3
 0
 * */
-public class MaximumCommonElements {
+public class    MaximumCommonElements {
 
 
     public static void main(String[] args) {
