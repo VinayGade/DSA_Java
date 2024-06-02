@@ -31,6 +31,8 @@ output:
 0
 * */
 public class MaximumCommonElements {
+
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int T = scan.nextInt();
@@ -44,12 +46,26 @@ public class MaximumCommonElements {
             for (int i = 0; i < N; i++) {
                 b[i] = scan.nextInt();
             }
+            //Binary Search
+            /*
             Arrays.sort(b);
             int count = countMaximumCommonElements(a, b, N);
+            */
+            //2 - Pointer
+            int count = countCommonElements2Ptr(a, b, N);
             System.out.println(count);
         }
     }
 
+    /* Method 1 : Binary Search
+    1. sort arr B.
+    2. count = 0;   ... initialize counter
+    3. for(x: A){
+            if(binarySearch(B, x)
+                count++;
+       }
+    4. return count;
+    * */
     static int countMaximumCommonElements(int[] a, int[] b, int n){
         int count = 0;
         for(int x: a){
@@ -72,5 +88,42 @@ public class MaximumCommonElements {
                 low = mid + 1;
         }
         return false;
+    }
+
+    /* Method 2 : 2 Pointer
+    1. sort arr A, B.
+    2. count = 0;   ... initialize counter
+       (i, j) = 0   ... 2 Pointer
+    3. while(i < N && j < N){      // |A| == |B| == N
+            if(A[i] == B[j]){
+                count++;
+                i++;
+                j++;
+            }else if(A[i] < B[j])
+                i++;
+            else
+                j++;
+       }
+    4. return count;
+    * */
+
+    static int countCommonElements2Ptr(int[] A, int[] B, int N){
+
+        Arrays.sort(A);
+        Arrays.sort(B);
+        int count = 0;
+        int i = 0;
+        int j = 0;
+        while(i < N && j < N){      // |A| == |B| == N
+            if(A[i] == B[j]){
+                count++;
+                i++;
+                j++;
+            }else if(A[i] < B[j])
+                i++;
+            else
+                j++;
+        }
+        return count;
     }
 }
