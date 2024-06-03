@@ -38,11 +38,11 @@ smallest positive missing number is 1.
         for(int i=n-1; i>0; i--){
             totalSum += i + 1;
 
-            if(arr[i] == arr[i-1]){
+            if(arr[i] == arr[i-1])
                 result[0] = arr[i];  // repeating element found
-            }else{
+            else
                 sum += arr[i];
-            }
+
         }
         // step 4: missing element = totalSum - sum.  ... since step(2)
         result[1] = totalSum - sum;
