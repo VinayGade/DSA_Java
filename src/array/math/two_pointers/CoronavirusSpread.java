@@ -3,6 +3,8 @@ package array.math.two_pointers;
 import java.util.Scanner;
 
 //Codechef
+//2-Pointer : Count people infected by Virus
+
 public class CoronavirusSpread {
     public static void main (String[] args) throws java.lang.Exception
     {
