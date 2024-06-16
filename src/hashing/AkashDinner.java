@@ -61,6 +61,7 @@ public class AkashDinner {
         }
     }
 
+    // Approach 1: using HashMap and PriorityQ
     static long computeTime(int n, int k, int[] a, int[] b){
 
         //Stack<Integer> categories = new Stack<>();
@@ -111,5 +112,34 @@ public class AkashDinner {
         for(int i=0; i<k; i++)
             totalTime += timeQ.poll();
         return totalTime;
+    }
+
+    // Approach 2: using list
+    static long computeTime2(int n, int k, int[] a, int[] b) {
+
+        Map < Integer, Integer > categoryMinTime = new HashMap < > ();
+
+        int minTime = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (categoryMinTime.containsKey(a[i])) {
+                minTime = Math.min(b[i], categoryMinTime.get(a[i]));
+                categoryMinTime.put(a[i], minTime);
+            } else {
+                categoryMinTime.put(a[i], b[i]);
+            }
+        }
+        long ans = 0;
+        List < Map.Entry < Integer, Integer >> list = new ArrayList < > (categoryMinTime.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+        for (Map.Entry < Integer, Integer > entry: list) {
+            ans = ans + entry.getValue();
+            k--;
+            if (k <= 0)
+                break;
+        }
+        if (k > 0)
+            ans = -1;
+        return ans;
     }
 }
