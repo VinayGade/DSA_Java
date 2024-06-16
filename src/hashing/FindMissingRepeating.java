@@ -26,24 +26,22 @@ public class FindMissingRepeating {
         return new int[]{repeating, missing};
     }
 
-    // Most memory and time efficient solution
+    // Most memory and time efficient solution using HashMap
 
     static int[] findTwoElementOptimized(int arr[], int n) {
         int[] twoElements = new int[2];
         Map<Integer, Integer> elements = new HashMap<>();
 
         for(int i: arr) {
-            if(elements.containsKey(i)) {
-                twoElements[0] = i;
-            }else {
+            if(elements.containsKey(i))
+                twoElements[0] = i;     //found repeating element
+            else
                 elements.put(i, 1);
-            }
         }
 
         for(int i=0; i<=n; i++) {
-            if(!elements.containsKey(i)) {
+            if(!elements.containsKey(i))
                 twoElements[1] = i;
-            }
         }
         return twoElements;
     }
