@@ -113,6 +113,8 @@ public class BinarySearchTree {
         return root;
     }
 
+    // TODO: define method to insert node in iterative way.
+
     public TreeNode delete(TreeNode root, int key){
         if(key < root.data)
             root.left = delete(root.left, key);
@@ -147,6 +149,8 @@ public class BinarySearchTree {
         }
         return root;
     }
+
+    // TODO: define method to delete node in iterative way.
 
     public TreeNode smallest(TreeNode root){   // left most leaf node
         TreeNode node = root;
@@ -223,7 +227,7 @@ public class BinarySearchTree {
         inorderRange(root.right, low, high, range);
     }
 
-    public int  rangeSumBST(TreeNode root, int x, int y) {
+    public int rangeSumBST(TreeNode root, int x, int y) {
 
         int rangeSum = 0;
         if (root != null) {
@@ -272,6 +276,30 @@ public class BinarySearchTree {
                     && isBalanced(root.right);
     }
 
+    //optimized way to check BST is balanced
+    public boolean isBalancedOptimized(TreeNode root) {
+        return checkHeight(root) != Integer.MIN_VALUE;
+    }
+
+    public int checkHeight(TreeNode root){
+        if(root == null)
+            return -1;
+        int leftHeight = checkHeight(root.left);
+
+        if(leftHeight == Integer.MIN_VALUE)
+            return Integer.MIN_VALUE;
+
+        int rightHeight = checkHeight(root.right);
+
+        if(rightHeight == Integer.MIN_VALUE)
+            return Integer.MIN_VALUE;
+
+        int heightDiff = leftHeight - rightHeight;
+        return (Math.abs(heightDiff) > 1)
+                ? Integer.MIN_VALUE
+                : Math.max(leftHeight, rightHeight) + 1;
+    }
+
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
 
         if(isLeaf(root) && subRoot.data == root.data)
@@ -301,6 +329,21 @@ public class BinarySearchTree {
         return true;
     }
 
+    // LeetCode 98. Validate Binary Search Tree
+    public boolean checkBST(TreeNode root) {
+        return checkBST(root, null, null);
+    }
+
+    boolean checkBST(TreeNode n, Integer min, Integer max){
+        if(n == null)
+            return true;
+
+        if((min != null && n.data<=min) || (max != null && n.data>=max))
+            return false;
+
+        return checkBST(n.left, min, n.data) && checkBST(n.right, n.data, max);
+    }
+
     List<Integer> inorderTraversal(TreeNode root){
         List<Integer> inorder = new ArrayList<>();
         if(root != null){
@@ -323,6 +366,116 @@ public class BinarySearchTree {
         else
             return root;
 
+    }
+
+    //First Common Ancestor
+    /*
+    First Common Ancestor of given 2 nodes
+    * */
+    TreeNode FCA(TreeNode root, TreeNode p, TreeNode q){
+        int delta = depth(root, p) - depth(root, q);          // difference in depth
+        TreeNode first = delta > 0 ? q : p;       // shallower node
+        TreeNode second = delta > 0 ? p : q;      // deeper node
+        second = goUpBy(root, second, Math.abs(delta)); // move deeper node up
+
+        //find where paths intersect.
+        while(first != second && first != null && second != null){
+            first = findParent(root, first);
+            second = findParent(root, second);
+        }
+        return (first == null || second == null) ? null : first;
+    }
+
+    TreeNode goUpBy(TreeNode root, TreeNode node, int delta){
+        while(delta > 0 && node != null){
+            node = findParent(root, node);
+            delta--;
+        }
+        return node;
+    }
+
+    int depth(TreeNode root, TreeNode node){
+        int depth = 0;
+        while(node != null){
+            node = findParent(root, node);
+            depth++;
+        }
+        return depth;
+    }
+
+    boolean covers(TreeNode root, TreeNode node){
+        if(root == null)
+            return false;
+        if(root == node)
+            return true;
+        return covers(root.left, node) || covers(root.right, node);
+    }
+
+    TreeNode commonAncestor(TreeNode root, TreeNode p, TreeNode q){
+        if(!covers(root, p) || !covers(root, q))
+            return null;
+        else if(covers(p, q))
+            return p;
+        else if(covers(q, p))
+            return q;
+
+        // Traverse upwards until you find a node that covers q.
+        TreeNode sibling = getSibling(root, p);
+        TreeNode parent = findParent(root, p);
+
+        while(!covers(sibling, q)){
+            sibling = getSibling(root, parent);
+            parent = findParent(root, parent);
+        }
+        return parent;
+    }
+
+    // Approach 3: Without parent
+    TreeNode commonAncestorOptimized(TreeNode root, TreeNode p, TreeNode q){
+        if(!covers(root, p) || !covers(root, q))
+            return null;
+        return ancestorHelper(root, p, q);
+    }
+
+    TreeNode ancestorHelper(TreeNode root, TreeNode p, TreeNode q){
+        if(root == null || root == p || root == q)
+            return root;
+
+        boolean leftP = covers(root, p);
+        boolean leftQ = covers(root, q);
+
+        if(leftP != leftQ)
+            return root;
+
+        TreeNode child = leftP ? root.left : root.right;
+        return ancestorHelper(child, p, q);
+    }
+
+    // next node of the given node in inorder path of BST
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode n){
+        if(n == null)
+            return null;
+
+        /*
+        * found right child
+        * return leftmost (smallest) node of right subtree
+        * */
+
+        if(n.right != null)
+            return smallest(n.right);
+            //return leftMostLeaf(n.right);
+
+        else{
+            TreeNode q = n;
+            TreeNode x = findParent(root, q);
+
+            // Go up until we're on left instead of right
+            while(x != null && x.left != q){
+                q = x;
+                x = findParent(root, x);
+            }
+            return x;
+        }
     }
 
     public int parent(TreeNode root, int key){
@@ -370,6 +523,13 @@ public class BinarySearchTree {
 
             return sibling;
         }
+    }
+
+    TreeNode getSibling(TreeNode root, TreeNode node){
+        TreeNode parent = findParent(root, node);
+        if(node == null || parent == null)
+            return null;
+        return parent.left == node ? parent.right : parent.left;
     }
 
     public void levelOrder(TreeNode root){
@@ -425,6 +585,53 @@ public class BinarySearchTree {
             result.add(level);
         }
         return result;
+    }
+
+    public List<Queue<TreeNode>> createLevelLinkedList(TreeNode root){
+        ArrayList<Queue<TreeNode>> result = new ArrayList<>();
+
+        //visit the root
+        Queue<TreeNode> current = new LinkedList<>();
+        if(root != null)
+            current.add(root);
+
+        while(!current.isEmpty()){
+            result.add(current);
+            Queue<TreeNode> parents = current;
+            current = new LinkedList<>();
+
+            for(TreeNode parent: parents){
+
+                //visit children
+                if(parent.left != null)
+                    current.add(parent.left);
+                if(parent.right != null)
+                    current.add(parent.right);
+            }
+        }
+        return result;
+    }
+
+    // Find all ancestors of node in BST
+    public ArrayList<Integer> Ancestors(TreeNode root, int target) {
+        ArrayList<Integer> ancestors = new ArrayList<>();
+        findAncestors(root, target, ancestors);
+        return ancestors;
+    }
+
+    static boolean findAncestors(TreeNode node, int target, ArrayList<Integer> ancestors) {
+        if (node == null)
+            return false;
+
+        if (node.data == target)
+            return true;
+
+        if (findAncestors(node.left, target, ancestors) || findAncestors(node.right, target, ancestors)) {
+            ancestors.add(node.data);
+            return true;
+        }
+
+        return false;
     }
 
     // LeetCode 543: Diameter of Binary Tree
@@ -537,5 +744,29 @@ public class BinarySearchTree {
             zigzag.add(level);
         }
         return zigzag;
+    }
+
+    //Duplicate Subtrees
+    public List<TreeNode> printAllDups(TreeNode root) {
+        ArrayList<TreeNode> list = new ArrayList<>();
+        HashMap<String, Integer> map= new HashMap<>();
+        helper(root,list,map);
+        return list;
+    }
+
+    String helper(TreeNode root, ArrayList<TreeNode> list, HashMap<String,Integer> map){
+
+        if(root==null)
+            return "*";
+
+        String data= root.data+" "+helper(root.left,list,map)+" "
+                +helper(root.right,list,map);
+
+        map.put(data, map.getOrDefault(data,0)+1);
+
+        if(map.get(data)==2)
+            list.add(root);
+
+        return data;
     }
 }
