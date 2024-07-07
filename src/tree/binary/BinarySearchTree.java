@@ -613,7 +613,7 @@ public class BinarySearchTree {
     }
 
     // Find all ancestors of node in BST
-    public ArrayList<Integer> Ancestors(TreeNode root, int target) {
+    public static ArrayList<Integer> Ancestors(TreeNode root, int target) {
         ArrayList<Integer> ancestors = new ArrayList<>();
         findAncestors(root, target, ancestors);
         return ancestors;
@@ -702,6 +702,63 @@ public class BinarySearchTree {
         path.remove(path.size()-1);
     }
 
+    // LeetCode 437. Path Sum III
+
+    /*
+    Given the root of a binary tree and an integer targetSum, return the number of paths
+    where the sum of the values along the path equals targetSum.
+
+    The path does not need to start or end at the root or a leaf, but it must go downwards
+    (i.e., traveling only from parent nodes to child nodes).
+
+    Input: root = [10,5,-3,3,2,null,11,3,-2,null,1], targetSum = 8
+Output: 3
+Explanation: The paths that sum to 8 are shown.
+Example 2:
+
+Input: root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
+Output: 3
+    */
+    // Map for keeping track of (PrefixSum, timesPrefixSumSeen) during traversal
+    Map<Long, Integer> hmap;
+    int count;
+
+    public int pathSum(TreeNode root, int targetSum) {
+        hmap = new HashMap<>();
+        count = 0;
+        dfs(root, 0, targetSum);
+        return count;
+    }
+
+    void dfs(TreeNode root, long prefixSum, int targetSum) {
+        // base case
+        if (root == null) return;
+
+
+        prefixSum += root.data;
+
+        // If map contains a sum equal to (prefixSum - targetSum), we need to increment count that many times
+        if (hmap.containsKey(prefixSum-targetSum)) {
+            count += hmap.get(prefixSum-targetSum);
+        }
+
+        // There can be cases when the prefixSum is directly equal to targetSum, we need to increment count
+        if (targetSum == prefixSum) {
+            count++;
+        }
+
+        // Update the prefixSum till current node and it's count
+        hmap.put(prefixSum, hmap.getOrDefault(prefixSum, 0) + 1);
+
+        // Recurse
+        dfs(root.left, prefixSum, targetSum);
+        dfs(root.right, prefixSum, targetSum);
+
+        // Backtrack
+        hmap.put(prefixSum, hmap.get(prefixSum) - 1);
+
+    }
+
     // LeetCode 103. Binary Search Tree Zigzag Level Order Traversal
     List<List<Integer>> zigZagLevelOrder(TreeNode root){
 
@@ -769,4 +826,79 @@ public class BinarySearchTree {
 
         return data;
     }
+
+    // Function to find the vertical width of a Binary Tree.
+    public int verticalWidth(TreeNode root) {
+        // code here.
+        HashMap<Integer,Integer> tm = new HashMap<>();
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+
+        vertical(root,tm,0);
+
+        for(int k : tm.keySet())
+        {
+            min = Math.min(min,k);
+            max = Math.max(max,k);
+        }
+
+        if(min == Integer.MAX_VALUE && max == Integer.MIN_VALUE)
+            return 0;
+        if(min >= 0)
+            return max+1;
+        if(max <= 0)
+            return (-1)*min+1;
+
+        return max-min+1;
+    }
+
+    public void vertical(TreeNode root, HashMap<Integer,Integer> tm, int k)
+    {
+        if(root == null)
+            return;
+        tm.put(k,root.data);
+        vertical(root.left,tm,k-1);
+        vertical(root.right,tm,k+1);
+    }
+
+    /*
+    // Function to find the vertical width of a Binary Tree.
+    public int verticalWidth(Node root) {
+
+        if(root == null)
+            return 0;
+        else if(root.left == null && root.right == null)//root = leaf
+            return 1;
+        else{
+
+       // vertical width = 1 (for root node) + leftWidth + rightWidth
+
+            return leftWidth(root) + rightWidth(root) + 1;
+        }
+    }
+
+    // width of left subtree of root
+    public int leftWidth(Node root){
+
+        int width = 0;
+        Node node = root;
+        while(node.left!=null){
+            node = node.left;
+            width++;
+        }
+        return width;
+    }
+
+    // width of right subtree of root
+    public int rightWidth(Node root){
+
+        int width = 0;
+        Node node = root;
+        while(node.right!=null){
+            node = node.right;
+            width++;
+        }
+        return width;
+    }
+    */
 }
