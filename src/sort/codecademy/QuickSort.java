@@ -2,6 +2,8 @@ package sort.codecademy;
 
 import sort.common.CommonUtility;
 
+import java.util.Scanner;
+
 public class QuickSort extends CommonUtility {
 
     //Iterative partition
@@ -40,6 +42,35 @@ public class QuickSort extends CommonUtility {
     }
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        //int t = scanner.nextInt();
+
+        QuickSort quick = new QuickSort();
+
+        //while (t-- > 0) {
+
+            int N = scanner.nextInt();
+            int[] a = new int[N];
+
+            for (int i = 0; i < N; i++)
+                a[i] = scanner.nextInt();
+
+            System.out.println("Before Sort :");
+
+            for (int i = 0; i < N; i++)
+                System.out.print(a[i]+" ");
+
+            int start = 0;
+            int end = a.length-1;
+            a = quick.quickSort(a, start, end);
+
+            System.out.println("after Sort :");
+            for (int i = 0; i < N; i++)
+                System.out.println(a[i]);
+        //}
+    }
+    /*
+    public static void main(String[] args) {
 
         QuickSort quick = new QuickSort();
 
@@ -53,4 +84,5 @@ public class QuickSort extends CommonUtility {
         System.out.println("Quick Sort :");
         quick.display(numbers);
     }
+     */
 }
