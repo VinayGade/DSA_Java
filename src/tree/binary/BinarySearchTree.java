@@ -759,6 +759,21 @@ Output: 3
 
     }
 
+    /*
+    LeetCode 112. Path Sum
+
+    Given a binary tree and an integer target, check whether there is a root-to-leaf path with its sum as target.
+    * */
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if(root == null)
+            return false;
+        else if(root.data == targetSum && isLeaf(root))
+            return true;
+        else
+            return hasPathSum(root.left, (targetSum - root.data)) ||
+                    hasPathSum(root.right, (targetSum - root.data));
+    }
+
     // LeetCode 103. Binary Search Tree Zigzag Level Order Traversal
     List<List<Integer>> zigZagLevelOrder(TreeNode root){
 
