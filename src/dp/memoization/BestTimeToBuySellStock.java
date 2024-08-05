@@ -1,6 +1,6 @@
 package dp.memoization;
 
-import java.util.List;
+import java.util.Arrays;
 
 //LeetCode 121 Easy: Best Time to Buy and Sell Stock
 public class BestTimeToBuySellStock {
@@ -81,38 +81,95 @@ public class BestTimeToBuySellStock {
         return result;
     }
 
-    public static int maxProfit(List<Integer> prices)
-    {
-        int n = prices.size();
+    public int maxProfitDP(int[] prices) {
 
-        // 2D DP array to store max profit with 0 and 1
-        // stocks
+        int n = prices.length;
+
+        int[] prev = new int[2];
+
+        prev[0] = 0;
+        prev[1] = 0;
+
+        int profit = 0;
+
+        for(int i=n-1; i>=0; i--){
+            int[] cur = new int[2];
+
+            for(int j=1; j>=0; j--){
+
+                if(j==0)
+                    profit = Math.max(0+prev[0], -prices[i] + prev[1]);
+
+                if(j==1)
+                    profit = Math.max(0+prev[1], prices[i] + prev[0]);
+                cur[j] = profit;
+            }
+            prev = cur;
+        }
+        return prev[0];
+    }
+
+    //DP - Tabulation
+
+    public int maxProfit(int[] prices, int n) {
+
+        int[][] dp = new int[n+1][2];
+
+        dp[n][0] = 0;
+        dp[n][1] = 0;
+
+        int profit = 0;
+
+        for(int i = n-1; i>=0; i--){
+
+            for(int j=0; j<=1; j++){
+
+                if(j==0){
+                    profit = Math.max(0 + dp[i+1][0], -prices[i]+dp[i+1][1]);
+                }
+                if(j==1){
+                    profit = Math.max(0 + dp[i+1][1], prices[i]+dp[i+1][0]);
+                }
+
+                dp[i][j] = profit;
+            }
+        }
+        return dp[0][0];
+    }
+
+    //DP - Memoization
+
+    public int maxProfit(int n, int[] prices) {
+
         int[][] dp = new int[n][2];
 
-        dp[0][0] = -prices.get(0);
-        dp[0][1] = 0;
+        for(int[] i: dp)
+            Arrays.fill(i, -1);
 
-        // Loop through prices to calculate max profit at
-        // each day
-        for (int i = 1; i < n; i++) {
-            // choice 1: Buy the stock at i, in which case
-            // the profit we get is the maximum profit we
-            // could have made till i-1 minus the price at
-            // i.
-            dp[i][0]
-                    = Math.max(dp[i - 1][0], -prices.get(i));
+        return solve(0, n, 0, prices, dp);
+    }
 
-            // choice 2: Sell the stock at i, in which case
-            // the profit we get is the maximum profit we
-            // could have made till i-1 by buying the stock
-            // earlier plus the price at i.
-            dp[i][1] = Math.max(
-                    dp[i - 1][1], dp[i - 1][0] + prices.get(i));
+    public int solve(int index, int n, int buy, int[] prices, int[][] dp){
+
+        if(index == n)
+            return 0;
+
+        if(dp[index][buy] != -1)
+            return dp[index][buy];
+
+        int profit = 0;
+
+        if(buy == 0){
+            profit = Math.max( (0 + solve ((index + 1), n, 0, prices, dp)) ,
+                    (-prices[index] + solve(index + 1, n, 1, prices, dp)) );
         }
 
-        // Return the maximum profit calculated from the
-        // last day
-        return Math.max(dp[n - 1][0], dp[n - 1][1]);
+        if(buy == 1){
+
+            profit = Math.max( (0 + solve ((index + 1), n, 1, prices, dp)) ,
+                    (prices[index] + solve(index + 1, n, 0, prices, dp)) );
+        }
+        return dp[index][buy] = profit;
     }
 
     public static void main(String[] args) {
@@ -120,7 +177,10 @@ public class BestTimeToBuySellStock {
         BestTimeToBuySellStock stock = new BestTimeToBuySellStock();
 
         int prices[] = {7,6,4,3,1};  // [7,6,4,3,1]  {7,1,5,3,6,4}
-        int profit = stock.maxProfit(prices);
+
+        int n = prices.length;
+
+        int profit = stock.maxProfit(prices, n);
 
         System.out.println("profilt ="+profit);
     }
