@@ -1,4 +1,4 @@
-package dp.memoization;
+package dp.tabulation;
 
 /*
 
