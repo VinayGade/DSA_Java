@@ -36,8 +36,35 @@ Since the largest window of s only has one 'a', return empty string.
     public static void main(String[] args) {
 
         String s = "ADOBECODEBANC", t = "ABC";
+        String subString = minWindow(s, t, s.length(), t.length());
         String subStr = minWindow(s, t);
+        System.out.println(subString);
         System.out.println(subStr);
+    }
+
+    // Optimized code
+    static String minWindow(String str, String t, int n, int m) {
+        int[] freq = new int[123];
+        for (int i = 0; i < m; i++) {
+            freq[t.charAt(i)]++;
+        }
+        int minLen = Integer.MAX_VALUE, start = 0, copy, len;
+        for (int s = 0, e = 0, count = m; e < n; e++) {
+            if (freq[str.charAt(e)]-- > 0) {
+                count--;
+            }
+            copy = count;
+            while (count == 0 && s <= e) {
+                if (freq[str.charAt(s++)]++ >= 0) {
+                    count++;
+                }
+            }
+            if (copy == 0 && minLen > (len = e - s + 2)) {
+                minLen = len;
+                start = s - 1;
+            }
+        }
+        return minLen != Integer.MAX_VALUE ? str.substring(start, start + minLen) : "";
     }
 
     static String minWindow(String s, String t) {

@@ -6,7 +6,31 @@ public class GCD {
         int a=12;
         int b=4;
         System.out.println("gcd("+a+", "+b+")="+gcd(a,b));
+        System.out.println("hcf("+a+", "+b+")="+HCF(a,b));
         System.out.println("lcm("+a+", "+b+")="+lcm(a,b));
+    }
+
+    // CodeChef: GCD == HCF  ...iterative approach
+
+    // Euclid Algorithm
+
+    /*
+    Euclid's Algorithm is a widely used method for finding the Greatest Common Divisor (GCD)
+    of two positive integers.
+
+    gcd(a, b) = gcd(b, a % b)
+
+    gcd(a, b) = a             ... b = 0
+              = gcd(b, a % b) ... otherwise
+    * */
+    static int HCF(int a, int b) {
+        int r;
+        while (b > 0) {
+            r = a % b;
+            a = b;
+            b = r;
+        }
+        return a;
     }
 
     //Euclid's repeated division approach

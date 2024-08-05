@@ -290,6 +290,34 @@ public class LinkedList {
         }
     }
 
+    public Node removeNthFromEnd(Node head, int n) {
+        int size = count(head);
+        if(size==n)
+            return head.next;
+        else{
+            int position = size - n;
+            Node prev = null;
+            Node curr = head;
+            for(int i = 0; i < position; i++)
+            {
+                prev = curr;
+                curr = curr.next;
+            }
+            prev.next = curr.next;
+            return head;
+        }
+    }
+
+    public int count(Node head){
+        int n=0;
+        Node node = head;
+        while(node != null){
+            node = node.next;
+            n++;
+        }
+        return n;
+    }
+
     public void replace(int key, int data){       // Replace key with data
         //LinkedNode node = new LinkedNode(data);
         if(isEmpty())

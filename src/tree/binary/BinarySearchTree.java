@@ -916,4 +916,119 @@ Output: 3
         return width;
     }
     */
+
+    //Given a binary tree. Find the size of its largest subtree which is a Binary Search Tree.
+
+    int bstSize;
+    int largestBst(TreeNode root)
+    {
+        //if(checkBST(root)){
+        if(isBst(root)){
+            bstSize = 0;
+            return getSize(root);
+        }
+        return Math.max(largestBst(root.left),largestBst(root.right));
+    }
+
+    int getSize(TreeNode root){
+        if(root==null){
+            return 0;
+        }
+        return 1+getSize(root.left)+getSize(root.right);
+    }
+
+    // Another approach to find if tree is valid BST
+    boolean isBst(TreeNode root){
+        if(root==null){
+            return true;
+        }
+        if(root.left!=null && maxValue(root.left)>=root.data){
+            return false;
+        }
+        if(root.right!=null && minValue(root.right)<=root.data){
+            return false;
+        }
+        return isBst(root.left) && isBst(root.right);
+    }
+
+    //find max and min value if tree is not BST
+
+    int maxValue(TreeNode root){
+        int largest = Integer.MIN_VALUE;
+        if(root.left!=null)
+            largest = Math.max(largest, maxValue(root.left));
+
+        largest = Math.max(largest, root.data);
+
+        if(root.right!=null)
+            largest = Math.max(largest, maxValue(root.right));
+        return largest;
+    }
+
+    int minValue(TreeNode root){
+        int smallest = Integer.MAX_VALUE;
+        if(root.left!=null)
+            smallest = Math.max(smallest, minValue(root.left));
+
+        smallest = Math.min(smallest, root.data);
+
+        if(root.right!=null)
+            smallest = Math.min(smallest, minValue(root.right));
+        return smallest;
+    }
+
+    // Merge 2 BST into 1 BST
+
+    public List<Integer> merge(TreeNode root1, TreeNode root2) {
+        List<Integer> merged = new ArrayList<>();
+        List<Integer> list1 = inOrder(root1);
+        List<Integer> list2 = inOrder(root2);
+        mergeSortedLists(list1, list2, merged);
+        return merged;
+    }
+
+    private List<Integer> inOrder(TreeNode root){
+        List<Integer> inorder = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode current = root;
+
+        while(current != null || !stack.isEmpty()){
+            while(current != null){
+                stack.push(current);
+                current = current.left;
+            }
+            current=stack.pop();
+            inorder.add(current.data);
+            current = current.right;
+        }
+        return inorder;
+    }
+
+    private void mergeSortedLists(List<Integer> list1, List<Integer> list2, List<Integer> result)
+    {
+        int i=0;
+        int j=0;
+        int m = list1.size();
+        int n = list2.size();
+
+        while(i<m && j<n){
+            int x = list1.get(i);
+            int y = list2.get(j);
+            if(x <= y){
+                result.add(x);
+                i++;
+            }else{
+                result.add(y);
+                j++;
+            }
+        }
+        while(i<m){
+            result.add(list1.get(i));
+            i++;
+        }
+        while(j<n){
+            result.add(list2.get(j));
+            j++;
+        }
+    }
 }
