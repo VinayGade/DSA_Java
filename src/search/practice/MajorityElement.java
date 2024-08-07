@@ -1,6 +1,6 @@
 package search.practice;
 
-// Find Majority element in array
+//LeetCode 169: Find Majority element in array
 /*
 most frequent element if frequency >= 2
 element that appears strictly more than N/2 times in the array.
