@@ -1,4 +1,4 @@
-package array.math;
+package array.math.kadane;
 
 import java.util.Arrays;
 

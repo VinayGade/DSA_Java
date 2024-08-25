@@ -69,4 +69,15 @@ public class GCD {
         else
             return gcd(m - n, n);
     }
+
+    static long LCM(long a, long b, long gcd) {
+
+        //long product = a * b;
+
+        // GCD(a, b) * LCM(a, b) = a * b
+
+        // return (gcd == 1) ? product : (long) Math.round(product / gcd);
+
+        return (a * b / gcd);
+    }
 }

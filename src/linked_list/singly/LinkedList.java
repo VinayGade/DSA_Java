@@ -521,6 +521,18 @@ public class LinkedList {
         return slow;
     }
 
+    // find the value of the middle element of the linked list.
+    // middle = (N/2) + 1
+    static int getMiddleElement(Node head) {
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow.data;
+    }
+
     Node deleteMid(Node head) {
         if(head.next==null)
             return null;
@@ -712,7 +724,6 @@ public class LinkedList {
     public Node deleteDuplicates(Node head) {
         Node temp = head;
         while(temp != null){
-
             if(temp.next == null)
                 break;
             else if(temp.data == temp.next.data)
@@ -898,7 +909,7 @@ public class LinkedList {
             }
             // generate the odd indices list
             else{
-                if(oddHead==null){
+                if(oddHead == null){
                     oddHead = curr;
                     oddTail = curr;
                 }
@@ -913,5 +924,90 @@ public class LinkedList {
         evenTail.next = null;     // there should not be any node after even tail
         oddTail.next  = evenHead;   // join even list after odd
         return oddHead;
+    }
+
+    // Separate Even and Odd values in a linked list
+    public Node rearrange(Node head) {
+
+        Node evenHead = new Node();
+        Node oddHead = new Node();
+
+        Node even = evenHead;
+        Node odd = oddHead;
+
+        //traverse linked list
+        while (head != null) {
+
+            if (head.data % 2 == 0) {
+
+                // Check if even
+                even.next = head;
+                even = even.next;
+
+                // otherwise it is odd
+            } else {
+                odd.next = head;
+                odd = odd.next;
+            }
+            head = head.next; // Move to next node
+        }
+
+        // connect even sublist or odd sublist
+        even.next = oddHead.next;
+        odd.next = null;
+
+        //return rearranged list
+        return evenHead.next;
+    }
+
+    /*
+    Add 1 to a Linked List Number
+
+    You are given a linked list where each element in the list is a node and
+    have an integer data. You need to add 1 to the number formed by concatinating
+    all the list node numbers together and return the head of the modified linked list.
+    * */
+
+    public Node addOne(Node head) {
+        // code here.
+        Node cur=head;
+        Node prev=null;
+        Node p;
+        while(cur!=null){
+            p=cur.next;
+            cur.next=prev;
+            prev=cur;
+            cur=p;
+        }
+        head=prev;
+        if(head.data+1<9){
+            prev.data=prev.data+1;
+        }
+        else{
+            // prev.data=prev.data+1;
+            while(prev.data+1>9&&prev.next!=null){
+                prev.data=0;
+                prev=prev.next;
+            }
+            if(prev.next!=null){
+                prev.data=prev.data+1;
+            }
+            else{
+                Node ex=new Node(1);
+                prev.data=0;
+                prev.next=ex;
+            }
+        }
+        cur=head;
+        prev=null;
+        p=null;
+        while(cur!=null){
+            p=cur.next;
+            cur.next=prev;
+            prev=cur;
+            cur=p;
+        }
+        head=prev;
+        return head;
     }
 }

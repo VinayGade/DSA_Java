@@ -612,6 +612,23 @@ public class BinarySearchTree {
         return result;
     }
 
+    //Optimized BFS (level order traversal using Deque)
+    static void levelorder(TreeNode root) {
+        if (root == null) return;
+        Deque<TreeNode> q = new ArrayDeque<>();
+        q.addLast(root);
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = q.removeFirst();
+                System.out.println(node.data + " ");
+                if (node.left != null) q.addLast(node.left);
+                if (node.right != null) q.addLast(node.right);
+            }
+            System.out.println();
+        }
+    }
+
     // Find all ancestors of node in BST
     public static ArrayList<Integer> Ancestors(TreeNode root, int target) {
         ArrayList<Integer> ancestors = new ArrayList<>();
@@ -816,6 +833,33 @@ Output: 3
             zigzag.add(level);
         }
         return zigzag;
+    }
+
+    //using Deque (more efficient approach)
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if (root == null) return new ArrayList<List<Integer>>();
+        List<List<Integer>> result = new ArrayList<>();
+        // use ArrayDeque as a Queue
+        Deque<TreeNode> q = new ArrayDeque<>();
+        q.addLast(root);
+        while (!q.isEmpty()) {
+            int size = q.size();
+            // use ArrayDeque as a Linked List
+            Deque<Integer> ll = new ArrayDeque<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = q.removeFirst();
+                if (result.size() % 2 == 0)
+                    ll.addLast(node.data);
+                else
+                    ll.addFirst(node.data);
+                if (node.left != null)
+                    q.addLast(node.left);
+                if (node.right != null)
+                    q.addLast(node.right);
+            }
+            result.add(new ArrayList<Integer>(ll));
+        }
+        return result;
     }
 
     //Duplicate Subtrees
@@ -1031,4 +1075,92 @@ Output: 3
             j++;
         }
     }
+
+    //returns list containing the bottom view of the given tree.
+    public ArrayList <Integer> bottomView(TreeNode root)
+    {
+        // Code here
+        ArrayList<Integer> ans=new ArrayList<>();
+        if(root==null)
+            return ans;
+        Queue<TreeNode> q=new LinkedList<>();
+        Queue<Integer> wq=new LinkedList<>();
+        q.add(root);
+        wq.add(0);
+        HashMap<Integer,Integer> mp=new HashMap<>();
+        mp.put(0,root.data);
+        while(!q.isEmpty()){
+            TreeNode temp=q.remove();
+            int tw=wq.remove();
+            mp.put(tw,temp.data);
+            if(temp.left!=null){
+                q.add(temp.left);
+                wq.add(tw-1);
+            }
+            if(temp.right!=null){
+                q.add(temp.right);
+                wq.add(tw+1);
+            }
+        }
+        ArrayList<Integer> key=new ArrayList<>(mp.keySet());
+        Collections.sort(key);
+        for(int k:key)
+            ans.add(mp.get(k));
+
+        return ans;
+    }
+
+    /*
+
+    Given a Binary Tree. Check for the Sum Tree for every node except the leaf node.
+    Return true if it is a Sum Tree otherwise, return false.
+
+    A SumTree is a Binary Tree where the value of a node is equal to the sum of
+    the nodes present in its left subtree and right subtree.
+    An empty tree is also a Sum Tree as the sum of an empty tree can be
+    considered to be 0. A leaf node is also considered a Sum Tree.
+
+    * */
+    boolean isSumTree(TreeNode root) {
+
+        if(root == null || (root.left == null && root.right == null))
+            return true;
+
+        int leftSum = findSum(root.left);
+        int rightSum = findSum(root.right);
+
+        if((leftSum + rightSum) == root.data){
+            if(isSumTree(root.left) && isSumTree(root.right))
+                return true;
+        }
+        return false;
+    }
+
+    int findSum(TreeNode root){
+        if(root == null)
+            return 0;
+        return root.data + findSum(root.left) + findSum(root.right);
+    }
+
+    // LeetCode 872. Leaf-Similar Trees for BST
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        List<Integer> leaf1 = new ArrayList<>();
+        List<Integer> leaf2 = new ArrayList<>();
+
+        getLeaves(root1, leaf1);
+        getLeaves(root2, leaf2);
+
+        return leaf1.equals(leaf2);
+    }
+
+    void getLeaves(TreeNode root, List<Integer> leaves) {
+        if (root != null) {
+            getLeaves(root.left, leaves);
+            if (isLeaf(root)) {
+                leaves.add(root.data);
+            }
+            getLeaves(root.right, leaves);
+        }
+    }
+
 }

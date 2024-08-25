@@ -164,6 +164,38 @@ public class Power {
         else return n == 1 || (n % 2 == 0 && isPowerOfTwo(n / 2));
     }
 
+
+    long floorSqrt(long n) {
+        long sqroot = sqrt(0, n, n);
+        return sqroot;
+    }
+
+    public long sqrt(long low, long high, long N){
+
+        // If the range is still valid
+        if (low <= high) {
+
+            // Find the mid-value of the range
+            long mid = (low + high) / 2;
+
+            // Base Case
+            if ((mid * mid <= N)
+                    && ((mid + 1) * (mid + 1) > N)) {
+                return mid;
+            }
+
+            // Condition to check if the
+            // left search space is useless
+            else if (mid * mid < N) {
+                return sqrt(mid + 1, high, N);
+            }
+            else {
+                return sqrt(low, mid - 1, N);
+            }
+        }
+        return low;
+    }
+
     public static void main(String[] args) {
 
         Power p = new Power();
@@ -176,6 +208,8 @@ public class Power {
 
         // square root
         Power sqrt = new Power();
-        System.out.println("Factorial ="+ sqrt.mySqrt(25));
+        System.out.println("Square root ="+ sqrt.mySqrt(25));
+
+        System.out.println("Square root ="+ sqrt.floorSqrt(25L));
     }
 }

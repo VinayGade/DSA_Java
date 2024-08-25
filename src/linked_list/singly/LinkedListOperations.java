@@ -31,7 +31,6 @@ public class LinkedListOperations {
         /*
         System.out.println("\n Reverse list : ");
         list.reverse();
-
          */
         list.deleteBegin();
         list.traverse();
@@ -39,13 +38,11 @@ public class LinkedListOperations {
         System.out.println("\ncount = "+list.count());
         list.traverse();
 
-
         System.out.println("\n find 80 ?"+list.find(80));
 
         /*
         System.out.println("\n Reverse list : ");
         list.reverse();
-
          */
 
         list.replace(80,70);

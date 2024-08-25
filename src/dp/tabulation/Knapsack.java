@@ -11,11 +11,10 @@ public class Knapsack {
      w[] = {10, 20, 30}
      v[] ={60, 100, 120}
     * */
-
-
+    
     // recursion  ... O(2^n)
 
-    int knapSack(int W, int w[], int[] v, int n) {
+    static int knapSack(int W, int w[], int[] v, int n) {
 
         if (n == 0 || W == 0)
             return 0;
@@ -26,10 +25,9 @@ public class Knapsack {
         else
             return Math.max(knapSack(W, w, v, n - 1),
                     v[n - 1] + knapSack(W - w[n - 1], w, v, n - 1));
-
     }
 
-    int knapSack01(int W, int[] w, int[] v, int n) {
+    static int knapSack01(int W, int[] w, int[] v, int n) {
 
         int dp[][] = new int[n + 1][W + 1];
         //0th row
@@ -54,6 +52,14 @@ public class Knapsack {
     }
 
     public static void main(String[] args) {
+        int capacity = 10;
 
+        int n = 4;
+        int [] V = {10, 40, 30, 50};
+        int [] W = {5, 4, 6, 3};
+
+        int max = knapSack01(capacity, W, V, n);
+
+        System.out.println(max);
     }
 }
