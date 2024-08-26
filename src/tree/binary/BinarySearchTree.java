@@ -113,7 +113,7 @@ public class BinarySearchTree {
         return root;
     }
 
-    // TODO: define method to insert node in iterative way.
+    // TODO: insert node in an iterative way.
 
     public TreeNode delete(TreeNode root, int key){
         if(key < root.data)
@@ -313,6 +313,31 @@ public class BinarySearchTree {
                 return inorder.containsAll(inorderSubtree);
             }
         }
+    }
+
+    int findSubtree(TreeNode s, TreeNode t) {
+        return isSubTree(s, t) ? 1 : 0;
+    }
+
+    // LeetCode 572. Subtree of Another Tree
+    boolean isSubTree(TreeNode s, TreeNode t) {
+        if (s == null)
+            return false;
+        if (isSame(s, t))
+            return true;
+        return isSubTree(s.left, t) || isSubTree(s.right, t);
+    }
+
+    // LeetCode 100. Same Tree
+    boolean isSame(TreeNode s, TreeNode t) {
+        if (s == null && t == null)
+            return true;
+        if (s == null || t == null)
+            return false;
+        if (s.data != t.data)
+            return false;
+
+        return isSame(s.left, t.left) && isSame(s.right, t.right);
     }
 
     public boolean isValidBST(TreeNode root) {

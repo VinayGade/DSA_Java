@@ -39,7 +39,7 @@ public class LCS {
 
     // Reference: DSA in Java : Goodrich
     /* Returns table such that L[j][k] is length of LCS for X[0..j−1] and Y[0..k−1]. */
-    public int[][] lcsTable(char[] X, char[] Y, int m, int n) {
+    public int[][] LCS(char[] X, char[] Y, int m, int n) {
 
         int[][] L = new int[m+1][n+1];
         for (int j=0; j < m; j++)
@@ -107,7 +107,7 @@ public class LCS {
 
         int lcsDpLengthOptimized = lcs.lcsOptimized(str1, str2);
 
-        int[][] table = lcs.lcsTable(s1, s2, s1.length, s2.length);
+        int[][] table = lcs.LCS(s1, s2, s1.length, s2.length);
 
         String longestCommonSubsequence = lcs.reconstructLCS(s1, s2, table);
 
