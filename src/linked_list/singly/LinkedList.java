@@ -493,12 +493,54 @@ public class LinkedList {
         return temp;
     }
 
+    // optimized merge sort
+    private Node mergeSortOptimized(Node head) {
+        if (head == null || head.next == null) {
+            return head;  // Base case: empty list or single node
+        }
+
+        Node slow = head;
+        Node fast = head.next;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        Node mid = slow.next;
+        slow.next = null;
+
+        Node left = mergeSortOptimized(head);
+        Node right = mergeSortOptimized(mid);
+
+        return merge(left, right);
+    }
+
     Node middleElement(Node head) {
         Node slow = head;
         Node fast = head;
         while (fast != null && fast.next != null && fast.next.next != null) {
             fast = fast.next.next;
             slow = slow.next;
+        }
+        return slow;
+    }
+
+    /*
+    Optimized approach: Move the fast pointer once with each loop iteration but only move the slow pointer
+     every-other iteration.
+    * */
+    public static Node findMiddle(LinkedList linkedList) {
+        int count = 0;
+        Node fast = linkedList.head;
+        Node slow = linkedList.head;
+
+        while(fast != null) {
+            fast = fast.next;
+            if (count % 2 != 0) {
+                slow = slow.next;
+            }
+            count++;
         }
         return slow;
     }
@@ -775,6 +817,38 @@ public class LinkedList {
             }
         }
         return null;
+    }
+
+    public static Node identifyCycle(Node head) {
+        if (head == null || head.next == null)
+            return null;
+
+        Node slow = head;
+        Node fast = head;
+        boolean isCycle = false;
+
+        // Detecting cycle using Floyd's Tortoise and Hare method
+        while (fast != null && fast.next != null) {
+            slow = slow.next;            // Move slow pointer by one step
+            fast = fast.next.next;       // Move fast pointer by two steps
+
+            if (slow == fast) {          // Cycle detected
+                isCycle = true;
+                break;
+            }
+        }
+
+        if (!isCycle) return null;       // No cycle detected
+
+        // Finding the start of the cycle
+        slow = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        // Now, slow and fast meet at the beginning of the cycle
+        return slow;
     }
 
     //Detect size of the cycle in linked list
