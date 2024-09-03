@@ -40,13 +40,41 @@ Output :
         return arr;
     }
 
+    static void moveNegativesToRight(int[] arr, int n) {
+        int low=0,high=n-1;
+
+    /*  making high point to the last
+        non-negative integer in the array */
+        while(arr[high]<0 && high>low){
+            high--;
+        }
+
+    /*  swap the low integer with high
+        whenever we find a negative integer */
+        while(low<high){
+            if(arr[low]<0){
+                swap(arr, low, high);
+                high--;
+            }
+            low++;
+        }
+        return;
+    }
+
+    static int[] swap(int []arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        return arr;
+    }
+
     public static void main(String[] args) {
 
         int[] array = {1, -1, 3, 2, -7, -5, 11, 6};
         int n = array.length;
-        int[] shifted = segregateElements(array, n);
-        //int[] result = moveZeroesOptimized(array);
-        for(int x: shifted){
+        //int[] shifted = segregateElements(array, n);
+        moveNegativesToRight(array, n);
+        for(int x: array){
             System.out.print(x+" ");
         }
     }

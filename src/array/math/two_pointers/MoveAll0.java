@@ -1,4 +1,4 @@
-package array.math;
+package array.math.two_pointers;
 
 /*
 LeetCode 283. Move Zeroes
@@ -53,11 +53,45 @@ public class MoveAll0 {
         return nums;
     }
 
+    // 2 - pointers
+    public static void moveToEnd(int[] a, int n, int k) {
+        int i = 0;
+        int j = n - 1;
+
+        while (i <= j) {
+            while (i < j && a[j] == k){
+                // Decrement right pointer
+                j--;
+            }
+
+            if (a[i] == k) {
+
+                // Swap the two elements
+                // in the array
+                swap(a, i, j);
+            }
+
+            // Increment left pointer
+            i++;
+        }
+    }
+
+    static int[] swap(int []arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        return arr;
+    }
+
     public static void main(String[] args) {
         int[] array = {2,3,0,7,0,3,0,0,1};
-        int[] shifted = shift0InPlace(array);
-        int[] result = moveZeroesOptimized(array);
-        for(int x: shifted){
+        // int[] shifted = shift0InPlace(array);
+        // int[] result = moveZeroesOptimized(array);
+
+        int n = array.length;
+        // 2-pointers
+        moveToEnd(array, n, 0); // since key = 0
+        for(int x: array){
             System.out.print(x+" ");
         }
     }
