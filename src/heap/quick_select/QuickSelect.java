@@ -39,7 +39,6 @@ public class QuickSelect {
                 i++;
             }
         }
-
         swap(arr, i, right);
         return i;
     }
