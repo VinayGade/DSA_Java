@@ -1,4 +1,4 @@
-package array.math.string;
+package array.math.two_pointers;
 
 import java.util.Scanner;
 
