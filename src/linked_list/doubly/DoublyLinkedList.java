@@ -224,7 +224,30 @@ public class DoublyLinkedList {
             }
             return key;
         }
+    }
 
+    static DoublyLinkedNode deleteNodeAt(DoublyLinkedNode head, int position) {
+        if (position == 1) {
+            head = head.next;
+            head.prev = null;
+            return head;
+        }
+        int pos = 1;
+        DoublyLinkedNode temp = head;
+        DoublyLinkedNode pre = null;
+        while (temp != null) {
+            if (pos == position) {
+                DoublyLinkedNode nex = temp.next;
+                pre.next = nex;
+                if (nex != null)
+                    nex.prev = pre;
+                break;
+            }
+            pos++;
+            pre = temp;
+            temp = temp.next;
+        }
+        return head;
     }
 
     public int delete(int key){
@@ -301,4 +324,39 @@ public class DoublyLinkedList {
         }
     }
 
+    DoublyLinkedNode insertAt(DoublyLinkedNode head, int position, int data){
+        DoublyLinkedNode temp = new DoublyLinkedNode(data);
+        if (position == 1) {
+            DoublyLinkedNode newNode = new DoublyLinkedNode(data);
+            newNode.next = head;
+            head.prev = newNode;
+            head = newNode;
+            return head;
+        }
+        DoublyLinkedNode tmp = head;
+        int pos = 1;
+        DoublyLinkedNode pre = null;
+        boolean isDone = false;
+        while (tmp != null) {
+            if (pos == position) {
+                DoublyLinkedNode newNode = new DoublyLinkedNode(data);
+                if (pre != null)
+                    pre.next = newNode;
+                newNode.prev = pre;
+                newNode.next = tmp;
+                tmp.prev = newNode;
+                isDone = true;
+                break;
+            }
+            pre = tmp;
+            tmp = tmp.next;
+            pos++;
+        }
+        if (!isDone) {
+            DoublyLinkedNode newNode = new DoublyLinkedNode(data);
+            pre.next = newNode;
+            newNode.prev = pre;
+        }
+        return head;
+    }
 }
