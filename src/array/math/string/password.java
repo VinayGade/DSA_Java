@@ -84,12 +84,12 @@ public class password {
         boolean lower=false;
         boolean isspecial=false;
         String special="@#%&?";
-        for(int i=0;i<str.length();i++){
+        for(int i=0; i<str.length(); i++){
             char ch=str.charAt(i);
             if(Character.isLowerCase(ch)){
                 lower=true;
             }
-            if(i>0&&i<str.length()-1){
+            if(i>0 && i<str.length()-1){
                 if(Character.isUpperCase(ch)){
                     upper=true;
                 }
@@ -101,7 +101,7 @@ public class password {
                 }
             }
         }
-        return lower&&upper&&digit&&isspecial;
+        return lower && upper && digit && isspecial;
     }
 
     public static void main(String[] args) {
