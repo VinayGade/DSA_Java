@@ -953,6 +953,34 @@ public class LinkedList {
         node.next=node.next.next;
     }
 
+    //Find Next Smaller value in Linked List
+    /*
+    Linked List:  [19 18 16 12 8 8]
+    Next Smaller: [18 16 12 8 -1 -1]
+    * */
+    public Node nextSmallerValue(Node head) {
+
+        Stack<Node> nodeStack = new Stack<>();
+        Node current = head;
+
+        while(current != null){
+
+            while(!nodeStack.isEmpty() && nodeStack.peek().data >
+                    current.data){
+
+                nodeStack.peek().data = current.data;
+                nodeStack.pop();
+            }
+            nodeStack.push(current);
+            current = current.next;
+        }
+        while(!nodeStack.isEmpty()){
+            nodeStack.peek().data = -1;
+            nodeStack.pop();
+        }
+        return head;
+    }
+
     //LeetCode 328. Odd Even Linked List
     /*
     Input: head = [1,2,3,4,5]
