@@ -41,12 +41,12 @@ public class GroupAnagramsRemove {
         return frequencyMap;
     }
 
-    public static TreeMap<Character, Long> findCharFrequency(String word, int n){
-        TreeMap<Character, Long> frequencyMap = word.chars()
+    public static LinkedHashMap<Character, Long> findCharFrequency(String word, int n){
+        LinkedHashMap<Character, Long> frequencyMap = word.chars()
                 .mapToObj(c -> (char) c) // Convert IntStream to Stream<Character>
                 .collect(Collectors.groupingBy(
                         c -> c, // Character as the key
-                        TreeMap::new, // Use TreeMap to maintain order
+                        LinkedHashMap::new, // Use TreeMap to maintain order
                         Collectors.counting() // Count frequency
                 ));
         return frequencyMap;
