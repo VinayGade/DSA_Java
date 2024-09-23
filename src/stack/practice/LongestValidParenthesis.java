@@ -68,12 +68,10 @@ public class LongestValidParenthesis {
                 }
             }
         }
-
         return maxLength;
     }
 
     public static void main(String[] args) {
-
         String str = ")()())";
         int length = maxLengthParenthesis(str);
         System.out.println(length);
