@@ -16,6 +16,8 @@ public class KLargestElements {
         Queue<Integer> heap = new PriorityQueue<>(Collections.reverseOrder());
         //Queue<Integer> heap = new PriorityQueue<>();   // for smallest elements
 
+        //heap.addAll(kLargestElements);
+
         for(int i = 0; i < n; i++)
             heap.add(arr[i]);
 
