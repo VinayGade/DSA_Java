@@ -1,4 +1,4 @@
-package sliding_window;
+package array.math.sliding_window;
 
 import java.util.HashSet;
 import java.util.Set;

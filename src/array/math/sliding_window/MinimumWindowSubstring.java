@@ -1,8 +1,7 @@
-package sliding_window;
+package array.math.sliding_window;
 
 //LC 76 Minimum Window Substring
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

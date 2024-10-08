@@ -591,7 +591,7 @@ public class LinkedList {
     public Node removeDuplicates(Node head) {
 
         // do nothing if the list is empty
-        if (head == null) {
+        if (isEmpty()) {
             return null;
         }
 
@@ -605,6 +605,49 @@ public class LinkedList {
                 current = current.next;    // only advance if no deletion
         }
         return head;
+    }
+
+    public void removeDuplicates() {
+        if (isEmpty()) return;
+
+        Node current = head;
+        while (current != null && current.next != null) {
+            if (current.data == current.next.data) {
+                current.next = current.next.next; // Skip the duplicate
+            } else {
+                current = current.next; // Move to the next distinct element
+            }
+        }
+    }
+
+    public void deleteDuplicates(){
+        if (isEmpty()) {
+            System.out.println("Empty Linked List!!");
+            return;
+        } else {
+            Node prev = head;
+            Node curr = head.next;
+
+            //int element = head.data;
+
+            while (curr != null) {
+                if (curr.data == prev.data) {
+                    prev.next = curr.next; // Skip the duplicate
+                } else {
+                    prev = curr;  // Move prev forward
+                    //element = prev.data;
+                }
+                curr = curr.next;  // Always move curr forward
+            }
+            /*
+            curr = head;
+            while (curr != null) {
+                System.out.print(curr.data+" ");
+                curr = curr.next;
+            }
+            System.out.println();
+            */
+        }
     }
 
     // insert key in sorted linked list
