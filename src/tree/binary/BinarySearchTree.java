@@ -428,6 +428,18 @@ public class BinarySearchTree {
         return depth;
     }
 
+    public int depth( TreeNode root, int key){
+
+        if(root == null)
+            return -(int)1e9;
+        if(key == root.data)
+            return 0;
+        else
+            return 1 + Math.max(
+                    depth(root.left, key),
+                    depth(root.right, key));
+    }
+
     boolean covers(TreeNode root, TreeNode node){
         if(root == null)
             return false;
@@ -523,6 +535,21 @@ public class BinarySearchTree {
         }
     }
 
+    public TreeNode getParent(TreeNode root, TreeNode parent, int key){
+        if(root == null)
+            return null;
+        if(key == root.data)
+            return parent;
+
+        TreeNode left = getParent(root.left, root, key);
+        TreeNode right = getParent(root.right, root, key);
+        if(left == null && right == null)
+            return null;
+        else if(left == null)
+            return right;
+        return left;
+    }
+
     public int findSibling(TreeNode root, int key){
         if(root == null || root.data==key || isLeaf(root))
             return -1;    // since root can't have sibling, root is parent of entire BST.
@@ -557,6 +584,17 @@ public class BinarySearchTree {
         return parent.left == node ? parent.right : parent.left;
     }
 
+    //LeetCode 993. Cousins in Binary Tree
+    public boolean isCousins(TreeNode root, int x, int y) {
+
+        int xDepth = depth(root, x);
+        int yDepth = depth(root, y);
+
+        if(xDepth != yDepth)
+            return false;
+        return getParent(root, null, x) != getParent(root, null, y);
+    }
+
     public void levelOrder(TreeNode root){
 
         if(root != null && isLeaf(root))
@@ -585,6 +623,62 @@ public class BinarySearchTree {
                 .collect(Collectors.toList());
 
         path.forEach(element -> System.out.print(element+" "));
+    }
+
+    // LeetCode 637. Average of Levels in Binary Tree
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> averages = new LinkedList<>();
+        if(root.left == null && root.right == null)
+            averages.add((double)root.data);
+        else{
+
+            List<List<Integer>> levelOrderPath = levelOrderTraversal(root);
+
+            for(List<Integer> level: levelOrderPath){
+                if(level.size() == 1)
+                    averages.add((double)level.get(0));
+                else
+                    averages.add(level.parallelStream()
+                            .mapToInt(Integer::intValue)
+                            .average()
+                            .getAsDouble()
+                    );
+            }
+        }
+        return averages;
+    }
+
+    /* Function to print the average value of the
+nodes on each level */
+    void averageOfLevels() {
+        //vector<float> res;
+
+        // Traversing level by level
+        Queue<TreeNode> q = new LinkedList<TreeNode> ();
+        q.add(root);
+        int sum = 0, count  = 0;
+
+        while (!q.isEmpty()) {
+
+            // Compute sum of nodes and
+            // count of nodes in current
+            // level.
+            sum = 0;
+            count = 0;
+            Queue<TreeNode> temp = new LinkedList<TreeNode> ();
+            while (!q.isEmpty()) {
+                TreeNode n = q.peek();
+                q.remove();
+                sum += n.data;
+                count++;
+                if (n.left != null)
+                    temp.add(n.left);
+                if (n.right != null)
+                    temp.add(n.right);
+            }
+            q = temp;
+            System.out.print((sum * 1.0 / count) + " ");
+        }
     }
 
     public List<List<Integer>> levelOrderTraversal(TreeNode root) {
@@ -652,6 +746,37 @@ public class BinarySearchTree {
             }
             System.out.println();
         }
+    }
+
+    //LeetCode 107. Binary Tree Level Order Traversal II
+    /*
+    Given the root of a binary tree, return the bottom-up level order traversal of its nodes' values.
+    (i.e., from left to right, level by level from leaf to root).
+    * */
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List result = new ArrayList();
+        if (root == null) {
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            ArrayList<Integer> level = new ArrayList();
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode head = queue.poll();
+                level.add(head.data);
+                if (head.left != null) {
+                    queue.offer(head.left);
+                }
+                if (head.right != null) {
+                    queue.offer(head.right);
+                }
+            }
+            result.add(0, level);
+        }
+        return result;
     }
 
     // Find all ancestors of node in BST
