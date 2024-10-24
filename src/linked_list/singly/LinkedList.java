@@ -957,6 +957,25 @@ public class LinkedList {
         }
     }
 
+    // Return the sum of last k nodes
+    public int sumOfLastN_Nodes(Node head, int n) {
+        int length = size();
+        int i = 0;
+        int start = (length == n) ? i : (length - n);
+        int sum = 0;
+        Node temp = head;
+        while(temp!=null){
+            if(i<start){
+                i++;
+                temp = temp.next;
+                continue;
+            }
+            sum += temp.data;
+            temp = temp.next;
+        }
+        return sum;
+    }
+
     // Leetcode 1019. Next Greater Node In Linked List.
 
     /*
