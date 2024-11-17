@@ -1,4 +1,4 @@
-package string;
+package array.math.string;
 
 import java.util.Scanner;
 

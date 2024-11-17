@@ -60,7 +60,7 @@ public class FirstRepeatingElement {
 
     public static int firstRepeatingElement(int[] elements, int n) {
         int index = -1;
-        Set<Integer> set = new HashSet<Integer>();
+        Set<Integer> set = new HashSet<>();
 
         for (int i = n - 1; i>=0; i--) {
             if (set.contains(elements[i]))

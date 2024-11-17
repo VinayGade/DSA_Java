@@ -128,6 +128,45 @@ public class LinkedList {
         return n;
     }
 
+    public boolean isLengthEven(Node head) {
+
+        if(head == null)
+            return true;
+
+        Node fast = head;
+
+        int count = 1;
+        while (fast.next != null) {
+            if(fast.next.next == null){
+                count++;
+                break;
+            }
+            fast = fast.next.next;
+            count+=2;
+        }
+        return ((count%2) == 0);
+    }
+
+    public boolean isLengthEvenOptimized(Node head) {
+        // Fast pointer
+        Node temp=head;
+        while(temp != null && temp.next != null){
+            temp = temp.next.next;
+        }
+        return temp == null;
+    }
+
+    public boolean isLengthEven2(Node head) {
+        // code here
+        Node temp=head;
+        int count=0;
+        while(temp!=null){
+            count++;
+            temp=temp.next;
+        }
+        return (count%2==0);
+    }
+
     public void insertBegin(int data){
         Node temp = new Node(data);
         temp.next = head;
@@ -974,6 +1013,19 @@ public class LinkedList {
             temp = temp.next;
         }
         return sum;
+    }
+
+    //Occurence of an integer in a Linked List
+    public int countFrequency(Node head, int key) {
+        int count = 0;
+        Node temp = head;
+        while(temp != null){
+            if(key == temp.data){
+                count++;
+            }
+            temp = temp.next;
+        }
+        return count;
     }
 
     // Leetcode 1019. Next Greater Node In Linked List.
