@@ -1,9 +1,6 @@
 package array.math.intervals;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /*
 LeetCode 56. Merge Intervals
@@ -44,6 +41,39 @@ public class MergeIntervals {
             }
         }
         return result.toArray(new int[result.size()][]);
+    }
+
+    public int[][] mergeIntervals(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparingInt(
+                a->a[0]
+        ));
+
+        LinkedList<int[]> merged = new LinkedList<>();
+        for(int [] interval: intervals){
+            /*
+            if the current iterval doesn't overlap with prev,
+            append it
+            */
+            if(merged.isEmpty() ||
+                    merged.getLast()[1] < interval[0]){
+                merged.addLast(interval);
+            }
+            //merge the current and prev intervals otherwise
+            else{
+                merged.getLast()[1] = Math.max(
+                        merged.getLast()[1], interval[1]);
+            }
+        }
+
+        int[][] result = new int[merged.size()][2];
+        int i=0;
+        for(int[] x: merged){
+            result[i][0] = x[0];
+            result[i][1] = x[1];
+            i++;
+        }
+        //return merged.toArray(int[][]::new);
+        return result;
     }
 
     public static void main(String[] args) {
