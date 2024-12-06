@@ -1,6 +1,7 @@
 package greedy;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /*
 Fractional Knapsack:
@@ -59,5 +60,61 @@ public class FractionalKnapsack {
         int W = 50;
         double totalCost = fractionalKnapsack(arr, W);
         System.out.println(totalCost);
+
+        //eg 2
+        Item[] arr2 = {
+                new Item(60, 10),
+                new Item(100, 20),
+                new Item(120, 30)
+        };
+
+        int capacity = 50;
+
+        double maxValue = getMaxValue(arr, capacity);
+
+        // Function call
+        System.out.println(maxValue);
+    }
+
+    //approach 2:
+
+    //method to get maximum value
+    private static double getMaxValue(Item[] arr, int W){
+        Arrays.sort(arr, new Comparator<Item>() {
+            @Override
+            public int compare(Item item1, Item item2) {
+
+                double cpr1
+                        = new Double((double)item1.val
+                        / (double)item1.wt);
+                double cpr2
+                        = new Double((double)item2.val
+                        / (double)item2.wt);
+
+                if (cpr1 < cpr2)
+                    return 1;
+                else
+                    return -1;
+            }
+        });
+
+        double totalValue = 0d;
+        for(Item i: arr){
+            int curWt = i.wt;
+            int curVal = i.val;
+
+            if(W-curWt >= 0){
+                //This weight can be picked whole
+                W = W-curWt;
+                totalValue+=curVal;
+            }else{
+                //item could be picked in fractional amt
+                double fraction = (double)W/(double)curWt;
+                totalValue += (curVal * fraction);
+                W=(int) (W -(curWt * fraction));
+                break;
+            }
+        }
+        return totalValue;
     }
 }
