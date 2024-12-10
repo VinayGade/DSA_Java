@@ -68,6 +68,19 @@ public class BestTimeToBuySellStock {
         return profit;
     }
 
+    // The Most Optimized Solution
+    int achieveMaxProfit(int[] prices){
+        int n=prices.length;
+        int maxProfit = 0;
+        int bestBuy=prices[0];
+        for(int i=1; i<n; i++){
+            if(prices[i]>bestBuy)
+                maxProfit=Math.max(maxProfit, prices[i]-bestBuy);
+            bestBuy=Math.min(bestBuy, prices[i]);
+        }
+        return maxProfit;
+    }
+
     //LeetCode 122 Medium: Best Time to Buy and Sell Stock II
     public int maxProfitTablulation(int[] prices) {
         if(prices.length==0)
@@ -79,6 +92,18 @@ public class BestTimeToBuySellStock {
             }
         }
         return result;
+    }
+
+    //LC 122: Most Optimized approach
+    public int maxProfitII(int[] a) {
+
+        int n = a.length;
+        int profit = 0;
+        for(int i=1; i<n; i++){
+            if(a[i]>a[i-1])
+                profit += (a[i]-a[i-1]);
+        }
+        return profit;
     }
 
     public int maxProfitDP(int[] prices) {
@@ -183,5 +208,11 @@ public class BestTimeToBuySellStock {
         int profit = stock.maxProfit(prices, n);
 
         System.out.println("profilt ="+profit);
+
+        int stockPrices[] = {7, 2, 4, 5, 1, 3, 6, 4};
+
+        int maxProfit = stock.achieveMaxProfit(stockPrices);
+
+        System.out.println("Best time to buy and sell stock : maxProfit ="+maxProfit);
     }
 }

@@ -96,6 +96,9 @@ public class LCS {
         String str1="GTTCCTAATA";     //   AXYZ
         String str2="CGATAATTGAGA";   //   BAZ
 
+        String str3="GTTCCTAATAATGCATGC";     //   AXYZ
+        String str4="CGATAATTGAGAAT";
+
         char[] s1 = str1.toCharArray();
         char[] s2 = str2.toCharArray();
 
