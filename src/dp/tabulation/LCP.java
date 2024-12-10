@@ -157,9 +157,13 @@ public class LCP {
     public static void main(String[] args) {
 
         String S[] = {"geeksforgeeks", "geeks", "geek", "geezer"};
+        int n = S.length;
 
         String prefix = LCP(S);
 
-        System.out.println("Longest Common Prefix = "+prefix);
+        //System.out.println("Longest Common Prefix = "+prefix);
+
+        String lcprefix = longestCommonPrefix(S, 0, n-1);
+        System.out.println("Longest Common Prefix = "+lcprefix);
     }
 }
