@@ -46,6 +46,37 @@ public class EditDistance {
         return dp[m][n];
     }
 
+    public static int editDistanceOptimized(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
+
+        int[][] dp = new int[m + 1][n + 1];
+
+        // Initialize the base cases
+        for (int i = 0; i <= m; i++) {
+            dp[i][0] = i; // Cost of deleting all characters from word1
+        }
+        for (int j = 0; j <= n; j++) {
+            dp[0][j] = j; // Cost of inserting all characters into word1
+        }
+
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    // If characters are the same, no new operation is needed
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    // Choose the minimum of three operations: replace, delete, insert
+                    dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], // Replace
+                            Math.min(dp[i - 1][j], // Delete
+                                    dp[i][j - 1])); // Insert
+                }
+            }
+        }
+        return dp[m][n];
+    }
+
     public static void main(String[] args) {
 
         String word1 = "intention";
