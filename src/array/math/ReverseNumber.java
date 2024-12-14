@@ -3,8 +3,7 @@ package array.math;
 public class ReverseNumber {
 // Java program to reverse a number
         // Function to reverse the number
-        static int reverse(int n)
-        {
+        static int reverse(int n) {
             // reversed number
             int rev = 0;
             // remainder
