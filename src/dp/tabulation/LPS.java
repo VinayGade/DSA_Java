@@ -25,6 +25,15 @@ public class LPS {
         String s = "ABDCBTAP";  //cbbd  //ABDCBTAP  //bbbab
         int length = longestPalindromeSubseq(s);
         System.out.println("|LPS| = "+length);
+
+        int n=s.length();
+        //correct output
+        int[][] lps = longestPalindromeSubsequence(s);
+        int lpsLength = lps[0][n - 1];
+        System.out.println("|LPS| is "+lpsLength);
+
+        String LPS = findLPS(s, lps, n);
+        System.out.println("LPS is "+LPS);
     }
 
     static int longestPalindromeSubseq(String s) {
@@ -32,15 +41,16 @@ public class LPS {
         char[] X = s.toCharArray();
         char[] Y = new StringBuffer(s).reverse().toString().toCharArray();
         int m = X.length;
-        int n = Y.length;
-        int[][] lps = LPS(X, Y, m, n);
-        return lps[m][n];
+        //int n = Y.length;   ... | X | == | Y | = m
+        int[][] lps = LPS(X, Y, m);
+        return lps[m][m];
     }
 
-    static int[][] LPS(char[] X, char[] Y, int m, int n){
-        int[][] L = new int[m+1][n+1];
+    //2D - DP
+    static int[][] LPS(char[] X, char[] Y, int m){
+        int[][] L = new int[m+1][m+1];
         for(int j=0; j<m; j++){
-            for(int k=0; k<n; k++){
+            for(int k=0; k<m; k++){
                 if(X[j] == Y[k] && j != k)   //...if (j==k) : already visited character
                     L[j+1][k+1] = L[j][k]+1;
                 else
@@ -50,8 +60,8 @@ public class LPS {
         return L;
     }
 
-    // optimized solution
-    public int longestPalindromeSubsequence(String s) {
+    // optimized solution: : 2D DP
+    static int[][] longestPalindromeSubsequence(String s) {
         int n = s.length();
         int[][] dp = new int[n][n];
 
@@ -71,8 +81,65 @@ public class LPS {
                 }
             }
         }
-
         // Result is in dp[0][n-1]
-        return dp[0][n - 1];
+        return dp;
     }
+
+    // find longest palindromic subsequence
+    static String findLPS(String s, int[][] dp, int n){
+        StringBuilder lps = new StringBuilder();
+        int start = 0, end = n - 1;
+
+        while (start <= end) {
+            if (s.charAt(start) == s.charAt(end)) {
+                lps.append(s.charAt(start));
+                start++;
+                end--;
+            } else if (dp[start + 1][end] > dp[start][end - 1]) {
+                start++;
+            } else {
+                end--;
+            }
+        }
+
+        // Add the reverse of the first half to complete the palindrome
+        String firstHalf = lps.toString();
+        String secondHalf = new StringBuilder(firstHalf).reverse().toString();
+
+        // If the palindrome length is odd, the middle character should not be repeated
+        if (firstHalf.length() + secondHalf.length() > dp[0][n - 1]) {
+            return firstHalf + secondHalf.substring(1);
+        }
+
+        return firstHalf + secondHalf;
+    }
+
+    // Most Optimized for LPS length: 1D DP
+    static int longestPalindromeSubsequence_1D_DP(String s) {
+        int n = s.length();
+        int[] prev = new int[n];
+        int[] curr = new int[n];
+
+        // Base case: single characters are palindromes
+        for (int i = 0; i < n; i++) {
+            curr[i] = 1;
+        }
+
+        // Fill the DP table for substrings of increasing length
+        for (int len = 2; len <= n; len++) {
+            // Swap arrays for next iteration
+            prev = curr.clone();
+            for (int i = 0; i <= n - len; i++) {
+                int j = i + len - 1;
+                if (s.charAt(i) == s.charAt(j)) {
+                    curr[i] = prev[i + 1] + 2;
+                } else {
+                    curr[i] = Math.max(prev[i], curr[i + 1]);
+                }
+            }
+        }
+
+        return curr[0];
+    }
+
 }
