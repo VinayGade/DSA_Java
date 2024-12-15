@@ -138,7 +138,6 @@ public class LPS {
                 }
             }
         }
-
         return curr[0];
     }
 
