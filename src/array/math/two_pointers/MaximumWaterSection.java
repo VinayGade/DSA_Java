@@ -1,4 +1,4 @@
-package stack.practice;
+package array.math.two_pointers;
 
 //CodeChef: Stack and Queues: Maximum water in a section
 
@@ -106,7 +106,7 @@ public class MaximumWaterSection {
         return maxWater;
     }
 
-    // LeetCode 11: Container with the most water
+    // LeetCode 11: Container with the most water      // most optimized 2 Pointer
     public static int maxArea(int[] height) {
         int water = 0;
         int left = 0;
@@ -114,8 +114,7 @@ public class MaximumWaterSection {
         while(left<right){
             int leftMax = height[left];
             int rightMax = height[right];
-            water = Math.max( water, (right-left) *
-                    Math.min(leftMax, rightMax));
+            water = Math.max( water, (right-left) * Math.min(leftMax, rightMax));     // max(curr_water, (width * height))
 
             if(leftMax <= rightMax){
                 while(left < right && leftMax >= height[left])
@@ -123,6 +122,37 @@ public class MaximumWaterSection {
             }else{
                 while(left < right && rightMax >= height[right])
                     right--;
+            }
+        }
+        return water;
+    }
+
+    // easiest 2 pointer approach  ...Time Complexity : O(N)
+    static int maxArea_simplified(int[] height){
+        int maxWater = 0;
+        int left = 0, right = height.length - 1;
+        while(left < right){
+            int width = right - left;
+            int minHeight = Math.min(height[left], height[right]);
+            int water = width * minHeight;
+            maxWater = Math.max(maxWater, water);
+
+            if(height[left]<height[right])
+                left++;
+            else
+                right--;
+        }
+        return maxWater;
+    }
+
+    //worst case
+    int maxArea_BruteForce(int[] height){
+        int water = 0;
+        for(int i=0; i < height.length; i++){
+            for(int j = i+1; j < height.length; j++){
+                int w = j-i;
+                int currentWater = w * Math.min(height[i], height[j]);
+                water = Math.max(water, currentWater);
             }
         }
         return water;
