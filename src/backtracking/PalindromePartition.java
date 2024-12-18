@@ -22,7 +22,49 @@ Output: [["a"]]
 * */
 public class PalindromePartition {
 
-    public static List<List<String>> partition(String s) {
+    // approach - 2
+    static List<List<String>> partition(String s) {
+        if(s == null || s.length() == 0)
+            return new ArrayList<>();
+
+        List<List<String>> result = new ArrayList<>();
+        helper(s, new ArrayList<>(), result);
+        return result;
+    }
+
+    // backtracking
+    static void helper(String s, List<String> step, List<List<String>> result) {
+        // Base case
+        if(s == null || s.length() == 0) {
+            result.add(new ArrayList<>(step));
+            return;
+        }
+        for(int i = 1; i <= s.length(); i++) {
+            String temp = s.substring(0, i);
+            if(!isPalindrome(temp))
+                continue; // only do backtracking when current string is palindrome
+
+            step.add(temp);  // choose
+            helper(s.substring(i, s.length()), step, result); // explore
+            step.remove(step.size() - 1); // unchoose
+        }
+        return;
+    }
+
+    static boolean isPalindrome(String s){
+        int start = 0;
+        int end = s.length()-1;
+        while(start < end){
+            if(s.charAt(start)!=s.charAt(end))
+                return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    // approach - 1
+    public static List<List<String>> partitions(String s) {
         List<List<String>> result = new ArrayList<>();
         dfs(s, 0, new ArrayList<String>(), result);
         return result;
@@ -54,10 +96,16 @@ public class PalindromePartition {
     }
 
     public static void main(String[] args) {
+
+        // approach-1
         String s = "aab";
 
-        List<List<String>> partitions = partition(s);
+        List<List<String>> partitions = partitions(s);
         partitions.forEach(System.out::println);
 
+        // approach-2
+        String str="abaabcaba";
+        List<List<String>> solution = partition(str);
+        solution.forEach(System.out::println);
     }
 }
