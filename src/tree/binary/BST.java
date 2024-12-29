@@ -103,6 +103,14 @@ public class BST {
 
         System.out.println("\nLargest element of BST ="+bst.largest(root).data);
 
+        System.out.println("\nInorder traversal of BST:");
+
+        bst.inOrderTraversal(root);
+
+        int k = 3;
+
+        System.out.println("\nkth smallest element of BST ="+bst.kthSmallest(root, k));
+
         System.out.println("\nDiameter of BST = "+bst.diameterOfBinaryTree(root));
     }
 }

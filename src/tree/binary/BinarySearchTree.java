@@ -440,6 +440,27 @@ public class BinarySearchTree {
                     depth(root.right, key));
     }
 
+    //LeetCode 230. Kth Smallest Element in a BST
+    int c = 0;
+    int result = Integer.MIN_VALUE;
+
+    void inorder(TreeNode root, int k){
+        if(root == null)
+            return;
+        inorder(root.left, k);
+        c++;
+        if(c == k) {
+            result = root.data;
+            return;
+        }
+        inorder(root.right, k);
+    }
+
+    public int kthSmallest(TreeNode root, int k) {
+        inorder(root, k);
+        return result;
+    }
+
     boolean covers(TreeNode root, TreeNode node){
         if(root == null)
             return false;
