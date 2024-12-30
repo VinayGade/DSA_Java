@@ -2,6 +2,24 @@ package search;
 
 class BinarySearch {
 
+	//Precise Binary Search
+	public int search(int[] arr, int target) {
+		int left = 0;
+		int right = arr.length;
+		while (left < right) {
+			int mid = Math.floorDiv(left + right, 2);
+			int midValue = arr[mid];
+			if (midValue == target) {
+				return mid;
+			} else if (midValue < target) {
+				left = mid + 1;
+			} else {
+				right = mid;
+			}
+		}
+		return -1;
+	}
+
 	public int binarySearch(int a[], int low, int high, int key) {
 
 		if (low <= high) {
@@ -87,6 +105,8 @@ public class BinarySearchDemo{
 
 		System.out.println("Element "+key+" found at "+index+ " position");
 		System.out.println("Using Ternary Search Element "+key2+" found at "+i+ " position");
-	}
 
+		int idx = search.search(array, key);
+		System.out.println("target "+key+" found at "+idx+ " position");
+	}
 }
