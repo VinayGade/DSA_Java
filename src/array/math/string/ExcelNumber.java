@@ -1,7 +1,4 @@
-package wissen;
-
-import java.util.HashMap;
-import java.util.Map;
+package array.math.string;
 
 //LeetCode 171. Excel Sheet Column Number
 /*
@@ -88,8 +85,7 @@ public class ExcelNumber {
         }
         // Reverse the output string...
         // Bcause we have found characters from right to left...
-        output.reverse();
-        return output.toString();
+        return output.reverse().toString();
     }
     /*
     Given an integer columnNumber, return its corresponding column title as it appears in an Excel sheet.

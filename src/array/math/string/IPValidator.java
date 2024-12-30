@@ -1,4 +1,4 @@
-package wissen;
+package array.math.string;
 
 //LeetCode 468: Valid IP address (IPv4 or IPv6)
 

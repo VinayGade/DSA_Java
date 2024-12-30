@@ -24,7 +24,7 @@ Output: "Neither"
 Explanation: This is neither a IPv4 address nor a IPv6 address.
 * */
 
-public class ValidIPAddress {
+public class IPAddressValidation {
 
     static boolean isValidIPv4(String ip){
         String[] tokens = ip.split("\\.", -1);
