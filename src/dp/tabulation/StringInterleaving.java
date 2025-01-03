@@ -65,6 +65,33 @@ public class StringInterleaving {
         return dp[m][n];
     }
 
+    static boolean isInterleave_Optimised(String s1, String s2, String s3) {
+        int m = s1.length();
+        int n = s2.length();
+
+        if (m + n != s3.length())
+            return false;
+
+        boolean[] dp = new boolean[n + 1];
+
+        for (int i = 0; i <= m; i++){
+            for (int j = 0; j <= n; j++) {
+                boolean first = j != 0 && dp[j - 1] && s2.charAt(j - 1) == s3.charAt(i + j - 1);
+                boolean second = i != 0 && dp[j] && s1.charAt(i - 1) == s3.charAt(i + j - 1);
+
+                if (i == 0 && j == 0)
+                    dp[j] = true;
+                else if (i == 0)
+                    dp[j] = first;
+                else if (j == 0)
+                    dp[j] = second;
+                else
+                    dp[j] = first || second;
+            }
+        }
+        return dp[n];
+    }
+
     public static void main(String[] args) {
         String s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc";
         String result = isInterleave(s1, s2, s3) ? "YES" : "NO";
@@ -81,7 +108,7 @@ public class StringInterleaving {
         System.out.println("s2 : "+s2);
         System.out.println("s3 : "+s3);
 
-        result = isInterleave(s1, s2, s3) ? "YES" : "NO";
+        result = isInterleave_Optimised(s1, s2, s3) ? "YES" : "NO";
         System.out.println("isInterleave : "+result);
     }
 }
