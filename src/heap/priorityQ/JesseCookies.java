@@ -40,6 +40,20 @@ output: 2
 * */
 public class JesseCookies {
 
+    static int cookies(int k, List<Integer> cookies){
+        PriorityQueue<Integer> queue = new PriorityQueue<>(cookies);
+        int count = 0;
+        while(queue.peek() < k && queue.size() > 1){
+            int smallest=queue.poll();
+            int secondSmallest=queue.poll();
+            queue.add(smallest + 2 * secondSmallest);
+            count++;
+        }
+        if(queue.peek() < k)
+            return -1;
+        return count;
+    }
+
     public static int cookiesCount(int k, List<Integer> cookies) {
 
         int result = 0;
@@ -57,7 +71,7 @@ public class JesseCookies {
     public static void main(String[] args) {
         List<Integer> cookies= Arrays.asList(1, 2, 3, 9, 10, 12);
         int k = 7;
-        int count = cookiesCount(k, cookies);
+        int count = cookies(k, cookies);
         System.out.println("count = "+count);
     }
 }
