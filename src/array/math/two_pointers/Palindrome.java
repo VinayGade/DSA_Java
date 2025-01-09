@@ -137,6 +137,15 @@ public class Palindrome {
                 .noneMatch(i -> temp.charAt(i) != temp.charAt(temp.length() - i - 1));
     }
 
+    public int isPalindromic(String A) {
+        A = A.replaceAll("[^A-Za-z0-9]+", "").toLowerCase();
+        for(int i = 0; i < A.length() -1 / 2; i++){
+            if(A.charAt(i) != A.charAt(A.length() -1 - i))
+                return 0;
+        }
+        return 1;
+    }
+
     // Main driver method
     public static void main(String[] args) {
         String str = "geeks";
