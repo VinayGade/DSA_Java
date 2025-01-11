@@ -20,6 +20,7 @@ Explanation: The longest substring with all distinct characters is "abcdef", whi
 
 public class DistinctCharactersLongestSubString {
 
+    // Optimized code using "2-pointers sliding window" and HashMap
     static int longestUniqueSubstring(String s) {
         int n = s.length();
         int maxLength = 0;
@@ -35,6 +36,23 @@ public class DistinctCharactersLongestSubString {
         }
         return maxLength;
     }
+
+    /*
+
+Key Fixes and Explanation:
+
+Algorithm Change: Used the sliding window technique with a HashMap to track the last index of each character for efficiency.
+
+Removed frequency and findMax functions: They were unnecessary for this problem.
+
+Fixed the loop logic: The loop now iterates over the entire string, ensuring correctness for all test cases.
+
+Correct Handling of Repeated Characters: If a character is repeated, the start of the window adjusts properly.
+
+Edge Cases: The code now handles empty strings and single-character strings correctly.
+This version has O(n) time complexity and works for all test cases you provided.
+
+    * */
 
     //incorrect code
     static int longestUniqueSubstr(String s) {
