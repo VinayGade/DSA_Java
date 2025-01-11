@@ -822,6 +822,60 @@ nodes on each level */
         return false;
     }
 
+    //LeetCode 1161. Maximum Level Sum of a Binary Tree
+    /*
+    Given the root of a binary tree, the level of its root is 1,
+    the level of its children is 2, and so on.
+
+    Return the smallest level x such that the sum of all the values
+    of nodes at level x is maximal.
+
+Example 1:
+
+    Input: root = [1,7,0,7,-8,null,null]
+Output: 2
+Explanation:
+Level 1 sum = 1.
+Level 2 sum = 7 + 0 = 7.
+Level 3 sum = 7 + -8 = -1.
+So we return the level with the maximum sum which is level 2.
+
+Example 2:
+
+Input: root = [989,null,10250,98693,-89388,null,null,null,-32127]
+Output: 2
+
+    * */
+    public int maxLevelSum(TreeNode root) {
+        int maxSum = Integer.MIN_VALUE;
+        int level = 0;
+        int maxSumLevel = 0;
+
+        Queue<TreeNode> bfs = new LinkedList<>();
+        bfs.add(root);
+
+        while(!bfs.isEmpty()){
+            int size = bfs.size();
+            int levelSum = 0;
+            while(size-- > 0){
+                TreeNode cur = bfs.poll();
+                levelSum += cur.data;
+
+                if(cur.left != null)
+                    bfs.add(cur.left);
+
+                if(cur.right != null)
+                    bfs.add(cur.right);
+            }
+            level++;
+            if(levelSum > maxSum){
+                maxSum = levelSum;
+                maxSumLevel = level;
+            }
+        }
+        return maxSumLevel;
+    }
+
     // LeetCode 543: Diameter of Binary Tree
     /*
     * The diameter of a binary tree is the length of the longest path between any two nodes in a tree.
