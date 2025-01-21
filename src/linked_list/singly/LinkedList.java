@@ -115,6 +115,22 @@ public class LinkedList {
         return count;
     }
 
+    public int size(Node head) {
+        if (head == null)
+            return 0;
+        Node fast = head;
+        int count = 1;
+        while (fast.next != null) {
+            if (fast.next.next == null) {
+                count++;
+                break;
+            }
+            fast = fast.next.next;
+            count += 2;
+        }
+        return count;
+    }
+
     public int count(){
         int n = 0;
         if(!isEmpty()) {
@@ -213,8 +229,19 @@ public class LinkedList {
         Node temp = new Node(data);
         if(isEmpty()){
             head = temp;
+        }else {
+            Node curr = head;
+            Node prev = curr;
+            while (curr != null) {
+                if (curr.data == element) {
+                    prev.next = temp;
+                    temp.next = curr;
+                    break;
+                }
+                prev = prev.next;
+                curr = curr.next;
+            }
         }
-
     }
 
     public int deleteBegin(){
@@ -373,10 +400,81 @@ public class LinkedList {
             System.out.println("Element not found ");
     }
 
+    //LeetCode 25. Reverse Nodes in k-Group
+    /*
+    Given the head of a linked list, reverse the nodes of the list k at a time,
+    and return the modified list.
+
+    k is a positive integer and is less than or equal to the length of the linked list.
+    If the number of nodes is not a multiple of k then left-out nodes, in the end,
+    should remain as it is.
+
+    You may not alter the values in the list's nodes, only nodes themselves may be changed.
+
+    Input: head = [1,2,3,4,5], k = 2
+    Output: [2,1,4,3,5]
+
+    Input: head = [1,2,3,4,5], k = 3
+    Output: [3,2,1,4,5]
+
+    * */
+
+    public Node reverseKGroup(Node head, int k) {
+        Node begin;
+        if(head == null || head.next == null || k==1)
+            return head;
+        Node dummy = new Node(-1);
+        dummy.next = head;
+        begin = dummy;
+        int i = 0;
+        while(head != null){
+            i++;
+            if(i % k == 0){
+                begin = reverse(begin, head.next);
+                head = begin.next;
+            }else
+                head = head.next;
+        }
+        return dummy.next;
+    }
+
+    /*
+    Linked List Group Reverse
+
+    Given the head a linked list, the task is to reverse every k node in the linked list.
+    If the number of nodes is not a multiple of k then the left-out nodes in the end,
+    should be considered as a group and must be reversed.
+
+Input: head = 1 -> 2 -> 2 -> 4 -> 5 -> 6 -> 7 -> 8, k = 4
+Output: 4 -> 2 -> 2 -> 1 -> 8 -> 7 -> 6 -> 5
+
+Input: head = 1 -> 2 -> 3 -> 4 -> 5, k = 3
+Output: 3 -> 2 -> 1 -> 5 -> 4
+
+    * */
+
+    public Node reverseKGroups(Node head, int k) {
+
+        if(head==null)
+            return head;
+        if(size(head)<k)
+            return reverseRecursive(head);
+
+        Node curr=head,next=null,prev=null;
+
+        for(int i=0;i<k;i++){
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        head.next=reverseKGroups(curr,k);
+        return prev;
+    }
+
     public void reverseIter() {
 
         //tricky
-
         if (isEmpty())
             System.out.println("List Empty !! Cannot reverse");
         else if(head.next == null)
@@ -394,6 +492,22 @@ public class LinkedList {
         }
 
         head = q;
+    }
+
+    public Node reverse(Node begin, Node end){
+        Node curr = begin.next;
+        Node next, first;
+        Node prev = begin;
+        first = curr;
+        while(curr != end){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        begin.next = prev;
+        first.next = curr;
+        return first;
     }
 
     public Node recursiveReverse(Node head){
