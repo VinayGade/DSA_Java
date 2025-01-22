@@ -71,18 +71,19 @@ public class AlternatingSubArrayPrefix {
             }
 
             int[] dp = new int[N];
-            dp[N - 1] = 1; // Base case: the last element always forms a subarray of length 1
+            dp[N - 1] = 1; // Base case: Last element is always 1
 
             // Iterate from right to left
             for (int i = N - 2; i >= 0; i--) {
+
+                // Check if signs of arr[i] and arr[i + 1] are different
                 if ((A[i] > 0 && A[i + 1] < 0) || (A[i] < 0 && A[i + 1] > 0)) {
-                    dp[i] = dp[i + 1] + 1;
+                    dp[i] = dp[i + 1] + 1; // Increment based on previous value
                 } else {
-                    dp[i] = 1;
+                    dp[i] = 1; // Reset to 1 if signs are the same
                 }
             }
 
-            // Print the result
             for (int i = 0; i < N; i++) {
                 System.out.print(dp[i] + " ");
             }
