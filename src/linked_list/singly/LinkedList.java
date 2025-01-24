@@ -973,7 +973,7 @@ Output: 3 -> 2 -> 1 -> 5 -> 4
     }
 
     //Function to check if the linked list has a loop.
-    //Leetcode 141. Detect Cycle/ Loop in Linked List
+    //Leetcode 141. Detect Cycle/ loop in Linked List
     public static boolean detectLoop(Node head){
 
         if(head == null || head.next == null)
