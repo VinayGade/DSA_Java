@@ -1110,6 +1110,30 @@ Output: 3 -> 2 -> 1 -> 5 -> 4
         }
     }
 
+    // Function to remove a loop in the linked list.
+    public static void removeCycleFromList(Node head) {
+        Node hare = head;   // fast
+        Node turtle = head;  // slow
+        Node temp = head;
+
+        while(hare!= null && hare.next!=null){
+            hare=hare.next.next;
+            turtle = turtle.next;
+
+            if(hare == turtle){
+                //Node slow = head;
+                while(temp != turtle){
+                    turtle = turtle.next;
+                    temp = temp.next;
+                }
+                while (hare.next != turtle) {
+                    hare = hare.next;
+                }
+                hare.next = null;
+            }
+        }
+    }
+
     // Return the sum of last k nodes
     public int sumOfLastN_Nodes(Node head, int n) {
         int length = size();
