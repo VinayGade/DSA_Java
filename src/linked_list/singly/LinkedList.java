@@ -1134,6 +1134,27 @@ Output: 3 -> 2 -> 1 -> 5 -> 4
         }
     }
 
+    // GFG: Find the first node of loop in linked list
+    //Amazon, Flipkart, Morgan Stanley, Paytm, Ola, Walmart, Goldman Sachs, Google, Visa
+    public static Node findFirstNodeInCycle(Node head) {
+        // code here
+        if(head == null) return null;
+        Node slow = head;
+        Node fast = head;
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast) break;
+        }
+        if(slow != fast) return null;
+        slow = head;
+        while(slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+
     // Return the sum of last k nodes
     public int sumOfLastN_Nodes(Node head, int n) {
         int length = size();

@@ -151,4 +151,15 @@ Constraints:
 
     }
 
+    public String decodeToTitle(int A) {
+        StringBuilder columnName=new StringBuilder();
+        while(A>0){
+            int index=(A-1)%26;
+            columnName.append((char)(index+'A'));
+            A=(A-1)/26;
+
+        }
+        return columnName.reverse().toString();
+    }
+
 }

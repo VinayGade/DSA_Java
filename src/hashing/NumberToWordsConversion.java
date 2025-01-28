@@ -2,6 +2,31 @@ package hashing;
 
 import java.util.HashMap;
 
+/*
+
+Convert the amount in number to words:  (Directi, Paypal)
+
+Our company wants to create a data entry verification system.
+Given an amount in words and an amount indicated by data entry person in numbers,
+you have to detect whether the amounts are the same or not.
+
+Note:
+There are a lot of corner cases to be considered. The interviewer expects you to take care of them.
+Every word needs to be separated using "-" rather than a space character https://en.wikipedia.org/wiki/Indian_numbering_system
+"Use Expected Output option" to clear further doubts.
+
+Problem Constraints
+1 <= |A| <= 9
+1 <= |B| <= 100
+
+Example Input
+String num = "1234"
+String words = "one-thousand-two-hundred-and-thirty-four"
+
+Example Output
+1
+* */
+
 public class NumberToWordsConversion {
 
     public static int convertNumberToWords(String A, String B) {
