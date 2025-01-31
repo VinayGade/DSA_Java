@@ -1,9 +1,6 @@
 package backtracking;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /*
 Permutations of a String:
@@ -103,5 +100,38 @@ public class PermutationsString {
             }
         }
         return ans;
+    }
+
+    // Fastest code with optimizations
+    public ArrayList<String> findPermutationOptimized(String s) {
+        ArrayList<String> result = new ArrayList<>();
+        char[] chars = s.toCharArray();
+
+        Arrays.sort(chars);
+        boolean visited[] = new boolean[chars.length];
+
+        StringBuilder current = new StringBuilder();
+
+        generatePermutations(chars , visited , current , result);
+
+        return result;
+    }
+
+    public void generatePermutations(char[] chars , boolean[] visited , StringBuilder current , ArrayList<String> result){
+        if(current.length() == chars.length){
+            result.add(current.toString());
+            return;
+        }
+
+        for(int i = 0 ; i < chars.length ; i++){
+            if(visited[i] || (i>0 && chars[i]==chars[i-1] && !visited[i-1])){
+                continue; // if duplicate skip and next element
+            }
+            visited[i] = true;
+            current.append(chars[i]);
+            generatePermutations(chars , visited , current , result);
+            current.deleteCharAt(current.length() - 1);
+            visited[i] = false;
+        }
     }
 }
