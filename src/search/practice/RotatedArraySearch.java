@@ -1,5 +1,7 @@
 package search.practice;
 
+import java.util.List;
+
 // LeetCode 33. Search in Rotated Sorted Array
 public class RotatedArraySearch {
 
@@ -23,6 +25,35 @@ public class RotatedArraySearch {
             }
         }
         if(low == high && target != a[low])
+            return -1;
+        return low;
+    }
+
+    // Search in Rotated List
+
+    public int search(final List<Integer> a, int target) {
+
+        //int n = a.length;
+        int low = 0;
+        int high = a.size() - 1;
+        //int mid = 0;
+        while(low < high){
+            int mid = (low + high)/2;
+            int middle = a.get(mid);
+            int higher = a.get(high);
+            if(middle > higher){
+                if(target > middle || target <= higher)
+                    low = mid + 1;
+                else
+                    high = mid;
+            }else{
+                if(target > middle && target <= higher)
+                    low = mid + 1;
+                else
+                    high = mid;
+            }
+        }
+        if(low == high && target != a.get(low))
             return -1;
         return low;
     }

@@ -472,6 +472,21 @@ Output: 3 -> 2 -> 1 -> 5 -> 4
         return prev;
     }
 
+    public Node reverseList(Node head) {
+
+        Node current = head;
+        Node previous = null;
+
+        while(current!=null){
+            Node next = current.next;
+            current.next = previous;
+            previous = current;
+            current = next;
+        }
+
+        return previous;
+    }
+
     public void reverseIter() {
 
         //tricky
@@ -645,6 +660,70 @@ Output: 3 -> 2 -> 1 -> 5 -> 4
 
         return temp;
     }
+
+    public Node mergeTwoLists(Node list1, Node list2) {
+        Node temp1 = list1;
+        Node temp2 = list2;
+
+        LinkedList list3 = new LinkedList();
+
+        while(temp1 != null && temp2 != null){
+
+            int data1 = temp1.data;
+            int data2 = temp2.data;
+
+            if(data1 < data2 || data2 == data1){
+                list3.insertEnd(data1);
+                temp1 = temp1.next;
+            }else{
+                list3.insertEnd(data2);
+                temp2 = temp2.next;
+            }
+
+        }
+
+        while(temp1 != null){
+            list3.insertEnd(temp1.data);
+            temp1=temp1.next;
+        }
+
+        while(temp2 != null){
+            list3.insertEnd(temp2.data);
+            temp2=temp2.next;
+        }
+
+        return list3.head;
+    }
+
+    //Optimised Merge
+    public Node mergeTwoSortedLists(Node list1, Node list2) {
+        // Create a dummy node to simplify edge cases
+        Node dummy = new Node(-1);
+        Node current = dummy;
+
+        // Traverse both lists
+        while (list1 != null && list2 != null) {
+            if (list1.data <= list2.data) {
+                current.next = list1;
+                list1 = list1.next;
+            } else {
+                current.next = list2;
+                list2 = list2.next;
+            }
+            current = current.next;
+        }
+
+        // Append the remaining nodes from list1 or list2
+        if (list1 != null) {
+            current.next = list1;
+        } else {
+            current.next = list2;
+        }
+
+        // Return the head of the merged list (skip the dummy node)
+        return dummy.next;
+    }
+
 
     // optimized merge sort
     private Node mergeSortOptimized(Node head) {
