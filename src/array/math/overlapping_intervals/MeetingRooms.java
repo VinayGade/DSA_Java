@@ -47,8 +47,8 @@ class Meeting {
 
 public class MeetingRooms {
 
-    public boolean canAttendMeetings(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+    static boolean canAttendMeetings(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
         for (int i = 1; i < intervals.length; ++i) {
             int[] a = intervals[i - 1];
             int[] b = intervals[i];
@@ -61,7 +61,7 @@ public class MeetingRooms {
 
     // Function to find the maximum number of meetings that can
     // be performed in a meeting room.
-    public int maxMeetings(int n, int start[], int end[]) {
+    static int maxMeetings(int n, int start[], int end[]) {
         Meeting[] meetings = new Meeting[n];
 
         for(int i=0; i<n; i++){
@@ -81,5 +81,17 @@ public class MeetingRooms {
         }
 
         return count;
+    }
+
+    public static void main(String[] args) {
+        int[][] intervals = {{0,30},{5,10},{15,20}};
+        String canAttend = canAttendMeetings(intervals) ? "YES" : "NO";
+        System.out.println(canAttend);
+
+        int n = 6;
+        int start[] = {1, 3, 0, 5, 8, 5};
+        int end[] =  {2, 4, 6, 7, 9, 9};
+        int meetingAttendanceCount = maxMeetings(n, start, end);
+        System.out.println("Meeting Attendance = "+meetingAttendanceCount);
     }
 }

@@ -599,6 +599,7 @@ Output: 3 -> 2 -> 1 -> 5 -> 4
 
     Input: head = [5], left = 1, right = 1
     Output: [5]
+
     * */
     public Node reverseBetween(Node head, int left, int right) {
         if (head == null || left == right)
@@ -695,6 +696,26 @@ Output: 3 -> 2 -> 1 -> 5 -> 4
         return list3.head;
     }
 
+    /*
+    Above code can be optimized in terms of efficiency and cleaner code by directly
+    manipulating node pointers instead of creating an entirely new LinkedList.
+    * */
+
+    /*
+    Key Improvements:
+    No New List Creation: Instead of creating a new linked list and copying values,
+    this solution directly splices the existing nodes.
+
+    Dummy Node: The dummy node simplifies list handling by eliminating edge cases
+    for the initial head assignment.
+
+    Efficient Pointers: The pointers current, list1, and list2 handle merging
+    without unnecessary list operations.
+
+    This approach improves time and space efficiency while keeping the solution clean
+    and straightforward.
+    * */
+
     //Optimised Merge
     public Node mergeTwoSortedLists(Node list1, Node list2) {
         // Create a dummy node to simplify edge cases
@@ -723,7 +744,6 @@ Output: 3 -> 2 -> 1 -> 5 -> 4
         // Return the head of the merged list (skip the dummy node)
         return dummy.next;
     }
-
 
     // optimized merge sort
     private Node mergeSortOptimized(Node head) {

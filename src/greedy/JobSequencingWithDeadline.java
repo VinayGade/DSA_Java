@@ -57,7 +57,7 @@ public class JobSequencingWithDeadline {
             for (int j = Math.min(totalJobs - 1, arr.get(i).getDeadline() - 1);
                  j >= 0;
                  j--) {
-                if (result[j] == false)
+                if (!result[j])
                 {
                     result[j] = true;
                     job[j] = arr.get(i).id;
