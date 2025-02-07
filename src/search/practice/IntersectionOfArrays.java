@@ -1,8 +1,6 @@
 package search.practice;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /*
 LeetCode 349. Intersection of Two Arrays
@@ -53,6 +51,24 @@ public class IntersectionOfArrays {
             }
         }
         return false;
+    }
+
+    public ArrayList<Integer> intersect(final List<Integer> A, final List<Integer> B) {
+
+        ArrayList<Integer> ans = new ArrayList<>();
+        int ai = 0, bi = 0;
+        while (ai < A.size() && bi < B.size()) {
+            if (A.get(ai).equals(B.get(bi))) {
+                ans.add(A.get(ai));
+                ai++;
+                bi++;
+            } else if (A.get(ai) < B.get(bi)) {
+                ai++;
+            } else {
+                bi++;
+            }
+        }
+        return ans;
     }
 
     public static void main(String[] args) {
