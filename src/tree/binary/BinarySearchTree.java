@@ -1445,7 +1445,7 @@ Final traversal: [1, 4, 3, 2]
     // Add the left boundary (excluding leaf nodes)
     private void addLeftBoundary(TreeNode node, ArrayList<Integer> boundary) {
         while (node != null) {
-            if (!isLeaf(node))
+            if (!isLeafNode(node))
                 boundary.add(node.data);
             node = (node.left != null) ? node.left : node.right;
         }
