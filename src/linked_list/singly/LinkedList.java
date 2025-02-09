@@ -913,6 +913,32 @@ Given 1->2->3->3->4->4->5, return 1->2->5.
 
 Given 1->1->1->2->3, return 2->3.
     * */
+
+    /*
+    public ListNode deleteDuplicates(ListNode head) {
+        // do nothing if the list is empty
+        if (isEmpty(head)) {
+            return null;
+        }
+
+        ListNode prev = null;
+        ListNode current = head;
+
+        // compare the current node with the next node
+        while (current.next != null) {
+            if (current.val == current.next.val){
+                if(prev==null || current == head){
+                    head = current.next.next;
+                    continue;
+                }
+                prev.next = current.next.next;
+            }else{
+                prev = current;
+                current = current.next;    // only advance if no deletion
+            }
+        }
+        return head;
+    }*/
     public Node deleteDuplicatesKeepDistinctNodes(Node head) {
         // Dummy node to handle the edge case of head being removed
         Node dummy = new Node(0);
@@ -935,7 +961,6 @@ Given 1->1->1->2->3, return 2->3.
             }
             current = current.next;
         }
-
         return dummy.next;
     }
 
