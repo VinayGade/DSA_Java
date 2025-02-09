@@ -902,6 +902,43 @@ Output: 3 -> 2 -> 1 -> 5 -> 4
         }
     }
 
+    // Remove Duplicates from Sorted List (and keep only distinct elements)
+    /*
+    Given a sorted linked list, delete all nodes that have duplicate numbers,
+    leaving only distinct numbers from the original list.
+
+For example,
+
+Given 1->2->3->3->4->4->5, return 1->2->5.
+
+Given 1->1->1->2->3, return 2->3.
+    * */
+    public Node deleteDuplicatesKeepDistinctNodes(Node head) {
+        // Dummy node to handle the edge case of head being removed
+        Node dummy = new Node(0);
+        dummy.next = head;
+
+        Node prev = dummy;
+        Node current = head;
+
+        while (current != null) {
+            // Detect duplicates
+            if (current.next != null && current.data == current.next.data) {
+                // Skip all duplicate nodes
+                while (current.next != null && current.data == current.next.data) {
+                    current = current.next;
+                }
+                // Remove all duplicates by linking prev to current's next
+                prev.next = current.next;
+            } else {
+                prev = current; // Move prev forward only if no duplicate
+            }
+            current = current.next;
+        }
+
+        return dummy.next;
+    }
+
     // insert key in sorted linked list
     // returns head of linked list
     Node insertInSortedList(Node head, int key) {
