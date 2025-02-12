@@ -461,6 +461,45 @@ public class BinarySearchTree {
         return result;
     }
 
+    /*
+    k-th Smallest in BST:
+    Given a BST and an integer k, the task is to find the kth smallest element in the BST.
+    If there is no kth smallest element present then return -1.
+    * */
+
+    public int kthSmallestElement(TreeNode root, int k) {
+        if (root == null || k <= 0) {
+            return -1;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        int count = 0;
+
+        while (curr != null || !stack.isEmpty()) {
+            // Go to the leftmost node
+            while (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            }
+
+            // Process the node
+            curr = stack.pop();
+            count++;
+
+            // If k-th smallest is found
+            if (count == k) {
+                return curr.data;
+            }
+
+            // Move to the right subtree
+            curr = curr.right;
+        }
+
+        // If k is greater than the number of nodes
+        return -1;
+    }
+
     boolean covers(TreeNode root, TreeNode node){
         if(root == null)
             return false;
@@ -1496,6 +1535,41 @@ Final traversal: [1, 4, 3, 2]
             }
             getLeaves(root.right, leaves);
         }
+    }
+
+    public int sumK(TreeNode root, int k) {
+
+        // HashMap to store the frequency of prefix sums
+        HashMap<Integer, Integer> prefixSumMap = new HashMap<>();
+
+        // Initialize the prefix sum map with sum 0 (this allows paths that start from the root to be counted)
+        prefixSumMap.put(0, 1);
+
+        // Start DFS from the root with an initial sum of 0
+        return countPaths(root, 0, k, prefixSumMap);
+    }
+
+    int countPaths(TreeNode root, int currentSum, int k, HashMap<Integer, Integer> prefixSumMap){
+        if (root == null)
+            return 0;
+
+        // Update the current sum (prefix sum from root to current node)
+        currentSum += root.data;
+
+        // Check if there is a path that ends at the current node that sums to k
+        int count = prefixSumMap.getOrDefault(currentSum - k, 0);
+
+        // Update the prefix sum map: record the current prefix sum
+        prefixSumMap.put(currentSum, prefixSumMap.getOrDefault(currentSum, 0) + 1);
+
+        // Recurse down to the left and right children
+        count += countPaths(root.left, currentSum, k, prefixSumMap);
+        count += countPaths(root.right, currentSum, k, prefixSumMap);
+
+        // After visiting both subtrees, decrement the current prefix sum count
+        prefixSumMap.put(currentSum, prefixSumMap.get(currentSum) - 1);
+
+        return count;
     }
 
 }

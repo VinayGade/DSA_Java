@@ -65,6 +65,21 @@ public class FindPattern {
         return false;
     }
 
+    //Brute-Force Pattern Matching
+    // Returns the lowest index at which substring pattern begins in text (or else −1).
+    public static int findBrute(char[ ] text, char[ ] pattern) {
+        int n = text.length;
+        int m = pattern.length;
+        for (int i=0; i <= (n-m); i++) {
+            int k = 0;
+            while (k < m && text[i + k] == pattern[k])
+                k++;
+            if (k == m)
+                return i;
+        }
+        return -1;
+    }
+
     // Knuth-Morris-Pratt (KMP) algorithm
     // if |S| = N, |P| = M,  then time complexity: O(M + N)
     // Optimised and most efficient code

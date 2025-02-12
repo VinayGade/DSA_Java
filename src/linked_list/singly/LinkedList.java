@@ -1546,4 +1546,66 @@ Given 1->1->1->2->3, return 2->3.
         head=prev;
         return head;
     }
+
+    //LeetCode 24. Swap Nodes in Pairs
+    /*
+    head -> 1 -> 2 -> 3 -> 4
+    head -> 2 -> 1 -> 4 -> 3
+    * */
+    public Node swapNodesInPairs(Node head) {
+        if (head != null && head.next != null){
+
+            Node current = head;
+            while(current != null && current.next != null){
+
+                int temp = current.data;
+                current.data = current.next.data;
+                current.next.data = temp;
+
+                current = current.next.next;
+            }
+        }
+        return head;
+    }
+
+    // LeetCode 234. Palindrome Linked List
+
+    /*
+    Given the head of a singly linked list, return true if it is a
+palindrome or false otherwise.
+
+Input: head = [1,2,2,1]
+Output: true
+
+Input: head = [1,2]
+Output: false
+    * */
+
+    public boolean isPalindrome(Node head) {
+        if(head == null || head.next==null)
+            return true;
+
+        Node mid = findMid(head);
+        Node revStart = reverseList(mid.next);
+
+        Node first = head;
+        while(revStart != null){
+            if(revStart.data != first.data)
+                return false;
+            revStart = revStart.next;
+            first = first.next;
+        }
+        return true;
+    }
+
+    public Node findMid(Node head){
+        Node hare = head;
+        Node turtle = head;
+
+        while(hare.next!= null && hare.next.next!=null){
+            hare=hare.next.next;
+            turtle = turtle.next;
+        }
+        return turtle;
+    }
 }
