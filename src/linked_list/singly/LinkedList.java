@@ -1657,4 +1657,58 @@ Output: false
         }
         return turtle;
     }
+
+    /*
+    LeetCode 160. Intersection of Two Linked Lists
+
+    Given the heads of two singly linked-lists headA and headB,
+    return the node at which the two lists intersect.
+    If the two linked lists have no intersection at all, return null.
+
+    input:
+    listA = [4,1,8,4,5], listB = [5,6,1,8,4,5]
+    output:
+    intersect = 1
+
+    * */
+
+    // Function to find intersection point in Y shaped Linked Lists
+    public static int intersectPoint(Node headA, Node headB) {
+        if(headA==null || headB==null)
+            return -1;
+
+        Node tempA = headA;
+        Node tempB = headB;
+
+        while(tempA != tempB){
+            tempA = (tempA == null) ? headB : tempA.next;
+            tempB = (tempB == null) ? headA : tempB.next;
+        }
+
+        return tempA == null ? -1 : tempA.data;
+    }
+
+    public static int intersectionPoint(Node head1, Node head2) {
+        // Create a set to store the nodes of the first list
+        Set<Node> nodes = new HashSet<>();
+
+        // Traverse the first list and store each node in the set
+        Node temp1 = head1;
+        while (temp1 != null) {
+            nodes.add(temp1);
+            temp1 = temp1.next;
+        }
+
+        // Traverse the second list and check for intersection
+        Node temp2 = head2;
+        while (temp2 != null) {
+            if (nodes.contains(temp2)) {
+                return temp2.data;
+            }
+            temp2 = temp2.next;
+        }
+
+        // If no intersection is found
+        return -1;
+    }
 }
