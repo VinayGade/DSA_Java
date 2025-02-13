@@ -1572,4 +1572,155 @@ Final traversal: [1, 4, 3, 2]
         return count;
     }
 
+    // LeetCode 653. Two Sum IV - Input is a BST
+    /*
+
+    Given the root of a binary search tree and an integer k, return true if there exist
+    two elements in the BST such that their sum is equal to k, or false otherwise.
+
+    Input: root = [5,3,6,2,4,null,7], k = 9
+    Output: true
+
+    Input: root = [5,3,6,2,4,null,7], k = 28
+    Output: false
+
+    * */
+
+    /*
+    boolean findTarget(Node root, int target) {
+        List<Integer> inorderPath = inorder(root);
+        int key = 0;
+        for(int x: inorderPath){
+            key = target - x;
+            if(inorderPath.contains(key))
+                return true;
+        }
+        return false;
+    }*/
+
+    public boolean findTarget(TreeNode root, int target) {
+        List<Integer> inorderPath = inorder(root);
+
+        // Using Two-Pointer Technique
+        int left = 0, right = inorderPath.size() - 1;
+
+        while (left < right) {
+            int sum = inorderPath.get(left) + inorderPath.get(right);
+            if (sum == target) {
+                return true;
+            } else if (sum < target) {
+                left++;  // Increase left pointer to get a larger sum
+            } else {
+                right--; // Decrease right pointer to get a smaller sum
+            }
+        }
+        return false;
+    }
+
+
+    List<Integer> inorder(TreeNode root){
+
+        List<Integer> inorder = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode current = root;
+
+        while(current != null || !stack.isEmpty()){
+            while(current != null){
+                stack.push(current);
+                current = current.left;
+            }
+            current=stack.pop();
+            inorder.add(current.data);
+            current = current.right;
+        }
+        return inorder;
+    }
+
+    // Using HashSet and Queue
+    public boolean findTarget_Optimised(TreeNode root, int k) {
+
+        Set<Integer> set  = new HashSet<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()){
+            TreeNode node =queue.poll();
+            if (set.contains(k - node.data)) return true;
+            set.add(node.data);
+            if (node.left != null) queue.add(node.left);
+            if (node.right != null) queue.add(node.right);
+        }
+        return false;
+    }
+
+    // Recursive approach
+    Set<Integer> set = new HashSet<Integer>();
+
+    public boolean findTargetRecursive(TreeNode root, int k) {
+
+        if(root==null)
+            return false;
+           /*
+check if the set contains the difference of current root value and target
+if yes that means there exist two values whose sum is equal to target , so return true
+        */
+
+        if(set.contains(k-root.data))
+            return true;
+        // else it adds the value to the set
+
+        set.add(root.data);
+        // checks for the left and right nodes and returns ans
+
+        return findTargetRecursive(root.left,k) || findTargetRecursive(root.right,k);
+    }
+
+    // Optimized O(N) time, O(H) space solution using in-order and reverse in-order
+    public boolean findTargetSum(TreeNode root, int target) {
+        if (root == null) return false;
+
+        BSTIterator nextIterator = new BSTIterator(root, true);  // Forward in-order
+        BSTIterator prevIterator = new BSTIterator(root, false); // Reverse in-order
+
+        int left = nextIterator.next();
+        int right = prevIterator.next();
+
+        while (left < right) {
+            int sum = left + right;
+            if (sum == target)
+                return true;
+            if (sum < target)
+                left = nextIterator.next();  // Move forward
+            else right = prevIterator.next();  // Move backward
+        }
+
+        return false;
+    }
+
+    static class BSTIterator {
+        private Stack<TreeNode> stack = new Stack<>();
+        private boolean forward; // true for in-order, false for reverse in-order
+
+        public BSTIterator(TreeNode root, boolean forward) {
+            this.forward = forward;
+            pushAll(root);
+        }
+
+        public int next() {
+            if (stack.isEmpty())
+                return Integer.MAX_VALUE;
+            TreeNode node = stack.pop();
+            if (forward)
+                pushAll(node.right);  // Move right in in-order
+            else
+                pushAll(node.left);  // Move left in reverse in-order
+            return node.data;
+        }
+
+        private void pushAll(TreeNode node) {
+            while (node != null) {
+                stack.push(node);
+                node = forward ? node.left : node.right;
+            }
+        }
+    }
 }
