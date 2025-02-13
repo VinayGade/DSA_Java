@@ -316,6 +316,55 @@ public class LinkedList {
         }
     }
 
+    // Kth Node From Middle
+
+    /*
+    Given a linked list A of length N and an integer B.
+
+Find the value of the Bth node from the middle towards the beginning of Linked List.
+
+If no such element exists, then return -1.
+
+Input 1:
+
+ A = 3 -> 4 -> 7 -> 5 -> 6 -> 16 -> 15 -> 61 -> 16
+ B = 3
+ Input 2:
+
+ A = 1 -> 14 -> 6 -> 16 -> 4 -> 10
+ B = 2
+ Input 3:
+
+ A = 1 -> 14 -> 6 -> 16 -> 4 -> 10
+ B = 10
+
+    * */
+    public int kthElementFromMid(Node head, int k) {
+        if (head == null) return -1;
+
+        int size = 0;
+        Map<Integer, Integer> nodePositions = new LinkedHashMap<>();
+
+        int pos = 1;
+        Node temp = head;
+
+        while(temp != null){
+
+            nodePositions.put(pos, temp.data);
+            temp = temp.next; // Fix: Move to the next node
+            size++;
+            pos++;
+        }
+
+        //int mid = Math.round(size / 2); // incorrect
+        int mid = (size / 2) + 1; // Fix: Correct middle calculation
+
+        //int position = mid + k;  // incorrect
+        int position = mid - k;   // Fix: Subtract B instead of adding
+
+        return (position < 1 || position > size) ? -1 : nodePositions.get(position);
+    }
+
     public int deleteAt(int index){
         if(isEmpty()){
             System.out.println("Empty Linked List!!");
