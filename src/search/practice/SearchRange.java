@@ -1,4 +1,4 @@
-package search;
+package search.practice;
 
 //LeetCode 34. Find First and Last Position of Element in Sorted Array
 
@@ -66,6 +66,42 @@ public class SearchRange {
                 } else {
                     left = mid + 1;
                 }
+            }
+        }
+        return idx;
+    }
+
+    //Optimised code
+    /*
+  Optimizations:
+Early Exit Condition: If the first occurrence search (left) returns -1,
+there's no need to search for right since the element doesn't exist.
+Remove Extra Array Assignment: Instead of creating result[] at the beginning,
+assign values directly.
+Avoid Redundant Computation: The second search (right) can start from
+the found left index instead of 0.
+    * */
+    public int[] searchRangeOptimised(int[] nums, int target) {
+        int left = binarySearchOptimised(nums, target, true);
+        if (left == -1) return new int[]{-1, -1}; // If target is not found, return early
+        int right = binarySearchOptimised(nums, target, false);
+        return new int[]{left, right};
+    }
+
+    private static int binarySearchOptimised(int[] nums, int target, boolean findLeft) {
+        int left = 0, right = nums.length - 1, idx = -1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                idx = mid;
+                if (findLeft) right = mid - 1; // Move left for first occurrence
+                else left = mid + 1; // Move right for last occurrence
             }
         }
         return idx;
