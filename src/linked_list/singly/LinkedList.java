@@ -1711,4 +1711,100 @@ Output: false
         // If no intersection is found
         return -1;
     }
+
+    //LeetCode 61: Rotate the List
+
+    /*
+    rotate the list to R places to the right.
+
+    A single rotation to the right is an operation in which the last element of the list is
+    moved to the first place in the list, while all the other elements are moved one place to the right.
+
+    R=3
+head -> 4 -> 7 -> 3 -> 1 -> 6
+head -> 3 -> 1 -> 6 -> 4 -> 7
+    * */
+
+    Node rotateRight(Node head, int R) {
+
+        if (head == null || head.next == null || R == 0) {
+            return head;
+        }
+
+        // Determine the size of the list and last node
+        Node last = head;
+        int size = 1;
+        while (last.next != null) {
+            last = last.next;
+            size++;
+        }
+
+        // Normalize R
+        R = R % size;
+        if (R == 0) {
+            return head;
+        }
+
+        // Find the new end of the list
+        Node newEnd = head;
+        for (int i = 0; i < size - R - 1; i++) {
+            newEnd = newEnd.next;
+        }
+
+        // Rotation
+        Node newHead = newEnd.next;
+        newEnd.next = null;
+        last.next = head;
+
+        return newHead;
+    }
+
+    // CodeChef: Critical points in a Linked List
+
+    /*
+    Given the head of a linked list, Find the number of critical points.
+    (The starting and end are not considered critical points).
+
+    Local minima or maxima are called critical points.
+
+    A Node is called a local minima if both next and previous elements are
+    greater than the current element.
+
+    A Node is called a local maxima if both next and previous elements are
+    smaller than the current element.
+
+Input
+    8
+1 2 3 3 3 5 1 3
+
+output
+2
+
+Input
+7
+1 2 3 2 1 3 2
+
+output
+3
+    * */
+
+    static int solve(Node head){
+
+        int maxima = 0;
+        int minima = 0;
+
+        Node temp = head.next;
+        Node prev = head;
+
+        while(temp.next!=null){
+            if(prev.data > temp.data && temp.next.data > temp.data)
+                minima++;
+            else if(prev.data < temp.data && temp.next.data < temp.data)
+                maxima++;
+            temp = temp.next;
+            prev = prev.next;
+        }
+
+        return minima + maxima;
+    }
 }
