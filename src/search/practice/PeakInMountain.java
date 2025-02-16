@@ -2,6 +2,8 @@ package search.practice;
 
 // LeetCode 852. Peak Index in a Mountain Array (Perfect Peak of Array)
 
+import java.util.ArrayList;
+
 /*
 
 You are given an integer mountain array arr of length n
@@ -47,6 +49,24 @@ public class PeakInMountain {
                 r = m;
         }
         return l;
+    }
+
+    public int findPeakElement(ArrayList<Integer> A) {
+
+        int left = 0, right = A.size() - 1;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+
+            if (A.get(mid) > A.get(mid + 1)) {
+                // Peak is in the left half (including mid)
+                right = mid;
+            } else {
+                // Peak is in the right half
+                left = mid + 1;
+            }
+        }
+        return A.get(left); // 'left' or 'right' will point to the peak
     }
 
     public static void main(String[] args) {
