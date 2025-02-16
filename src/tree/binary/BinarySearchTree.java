@@ -1696,6 +1696,154 @@ if yes that means there exist two values whose sum is equal to target , so retur
         return false;
     }
 
+    //LeetCode 449. Serialize and Deserialize BST
+    /*
+    Serialization is converting a data structure or object into a sequence of bits so that
+    it can be stored in a file or memory buffer, or transmitted across a network connection
+    link to be reconstructed later in the same or another computer environment.
+
+    Serialization is converting a data structure or object into a sequence of bits so that
+    it can be stored in a file or memory buffer, or transmitted across a network connection
+    link to be reconstructed later in the same or another computer environment.
+
+Example 1:
+
+Input: root = [2,1,3]
+Output: [2,1,3]
+    * */
+    //Level Order Traversal
+    public ArrayList<Integer> serialize(TreeNode root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null) return result;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode current = queue.poll();
+            if (current == null) {
+                result.add(null);
+            } else {
+                result.add(current.data);
+                queue.add(current.left);
+                queue.add(current.right);
+            }
+        }
+        return result;
+    }
+
+    // Function to deserialize a list and construct the tree.
+    public TreeNode deSerialize(ArrayList<Integer> arr) {
+        if (arr.isEmpty())
+            return null;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(arr.get(0));
+        queue.add(root);
+        int i = 1;
+
+        while (!queue.isEmpty() && i < arr.size()) {
+            TreeNode current = queue.poll();
+
+            // Left child
+            if (arr.get(i) != null) {
+                current.left = new TreeNode(arr.get(i));
+                queue.add(current.left);
+            }
+            i++;
+
+            // Right child
+            if (i < arr.size() && arr.get(i) != null) {
+                current.right = new TreeNode(arr.get(i));
+                queue.add(current.right);
+            }
+            i++;
+        }
+        return root;
+    }
+
+    // Encodes a tree to a single string.
+    public String serializeBST(TreeNode root) {
+        if(root == null)
+            return "";
+
+        // Simple Level Order Traversal
+
+        Queue<TreeNode> q = new LinkedList();
+        StringBuilder b = new StringBuilder();
+
+        q.offer(root);
+        while(!q.isEmpty()){
+            TreeNode node = q.poll();
+
+            // if node is null add any reference , which indicate node is null(i am using # for null representation)
+            if(node == null){
+                b.append("# ");
+
+                // cant go null's left and right so skip that
+                continue;
+            }
+
+				/* if we reach at this point means node is not null ,
+				    add its val in stringBuilder and
+					also add nodes' left and right into queue,
+					for furthur all nodes's traversal	*/
+
+            b.append(node.data+ " ");
+            q.add(node.left);
+            q.add(node.right);
+        }
+
+        // here entrie traversal is completed return the encoded string
+        return b.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserializeBST(String data) {
+        if (data == "")
+            return null;
+
+        Queue<TreeNode> q = new LinkedList<>();
+        // Make values array by spliting the String on every " ".
+        String[] values = data.split(" ");
+
+        // It is pretty obvious Ist value in values is our root.
+        TreeNode root = new TreeNode(Integer.parseInt( values[0] ));
+        q.add(root);
+
+		/*
+		now traverse the String by checking its values,
+		if val is not equal to # (means node was not null),
+		make a new node of that value ,(say left)
+		add that node into the left of cur node.
+		for furthur travesal through whole string add left into queue.
+
+		and then check next value if that is also not #
+		make a new node of that value ,(say right)
+		add that node into right of cur node.
+		for furthur travesal through whole string add right into queue.
+
+
+		*/
+        for(int i=1; i< values.length; i++){
+
+            TreeNode cur = q.poll();
+            if(!values[i].equals("#")){
+                TreeNode left = new TreeNode(Integer.parseInt( values[i] ));
+                cur.left = left;
+                q.add(left);
+            }
+            if(!values[++i].equals("#")){
+                TreeNode right = new TreeNode(Integer.parseInt( values[i] ));
+                cur.right = right;
+                q.add(right);
+            }
+        }
+
+        //  At this point we  deserialize the string into tree, return root of that tree
+        return root;
+    }
+
     static class BSTIterator {
         private Stack<TreeNode> stack = new Stack<>();
         private boolean forward; // true for in-order, false for reverse in-order
