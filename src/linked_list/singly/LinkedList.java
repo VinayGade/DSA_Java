@@ -1788,7 +1788,7 @@ output
 3
     * */
 
-    static int solve(Node head){
+    static int criticalPoints(Node head){
 
         int maxima = 0;
         int minima = 0;
