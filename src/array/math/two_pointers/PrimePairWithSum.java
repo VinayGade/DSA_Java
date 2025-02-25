@@ -40,6 +40,39 @@ public class PrimePairWithSum {
         return isPrime;
     }
 
+    public ArrayList<Integer> primeSum(int A) {
+
+        ArrayList<Integer> primes = new ArrayList<Integer>();
+
+        if(A == 4){
+            primes.add(2);
+            primes.add(2);
+        }
+        int i=3;
+        int j=A-3;
+
+        while(i<=j){
+            if(isPrime(i) && isPrime(j)){
+                primes.add(i);
+                primes.add(j);
+                break;
+            }
+            i++;
+            j--;
+        }
+        return primes;
+    }
+
+    public boolean isPrime(int num){
+
+        for(int x = 2; x<=Math.sqrt(num); x++){
+            if(num % x == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         int n=4;   // 3+7=10
         //72 = 5 + 67

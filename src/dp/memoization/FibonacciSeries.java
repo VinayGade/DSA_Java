@@ -1,5 +1,8 @@
 package dp.memoization;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FibonacciSeries {
 
     /*
@@ -79,6 +82,20 @@ public class FibonacciSeries {
         return fibonacciRecursive(n-1)+fibonacciRecursive(n-2);
     }
 
+    public static int fibMemo(int n, Map<Integer, Integer> memo) {
+
+        if (n == 0 || n == 1) {
+            return n;
+        }
+        if (memo.containsKey(n)) {
+            return memo.get(n);
+        } else {
+            int result = fibMemo(n - 1, memo) + fibMemo(n - 2, memo);
+            memo.put(n, result);
+            return result;
+        }
+    }
+
     public static void main(String[] args) {
         int n = 25;
 
@@ -93,5 +110,11 @@ public class FibonacciSeries {
         System.out.print("result= "+result);
 
         System.out.print("nthFibonacci= "+nthFibonacci);
+
+        int num = 55;
+
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        int fibonacciNth = fibMemo(num, map);
+        System.out.println(fibonacciNth);
     }
 }
