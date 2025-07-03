@@ -1416,10 +1416,10 @@ Given 1->1->1->2->3, return 2->3.
         return arr;
     }
 
-    public static int findNextLargeNode(Node node, int val){
+    public static int findNextLargeNode(Node node, int val) {
         int nodeVal = 0;
-        while(node != null) {
-            if(node.data > val) {
+        while (node != null) {
+            if (node.data > val) {
                 nodeVal = node.data;
                 break;
             }
@@ -1437,6 +1437,11 @@ Given 1->1->1->2->3, return 2->3.
     }
 
     //Find Next Smaller value in Linked List
+
+    // find the next smaller value for every node in the linked list.
+    // Note: If for some value, there is no next smaller value then assume
+    // the next smaller value for this number = -1
+
     /*
     Linked List:  [19 18 16 12 8 8]
     Next Smaller: [18 16 12 8 -1 -1]
@@ -1446,10 +1451,10 @@ Given 1->1->1->2->3, return 2->3.
         Stack<Node> nodeStack = new Stack<>();
         Node current = head;
 
-        while(current != null){
+        while (current != null) {
 
-            while(!nodeStack.isEmpty() && nodeStack.peek().data >
-                    current.data){
+            while (!nodeStack.isEmpty() && nodeStack.peek().data >
+                    current.data) {
 
                 nodeStack.peek().data = current.data;
                 nodeStack.pop();
@@ -1457,9 +1462,55 @@ Given 1->1->1->2->3, return 2->3.
             nodeStack.push(current);
             current = current.next;
         }
-        while(!nodeStack.isEmpty()){
+        while (!nodeStack.isEmpty()) {
             nodeStack.peek().data = -1;
             nodeStack.pop();
+        }
+        return head;
+    }
+
+    public Node nextSmallerNode(Node head) {
+
+        Stack<Node> nodeStack = new Stack<>(); // Stack to keep nodes with unresolved next smaller value
+        Node current = head;
+
+        while (current != null) {
+            // Pop nodes that have a larger value than the current node's value
+            while (!nodeStack.isEmpty() && nodeStack.peek().data > current.data) {
+                nodeStack.peek().data = current.data; // Update the value to the next smaller value
+                nodeStack.pop();
+            }
+            // Push the current node onto the stack
+            nodeStack.push(current);
+            // Move to the next node
+            current = current.next;
+        }
+
+        // For any remaining nodes in stack, set next smaller value to -1
+        while (!nodeStack.isEmpty()) {
+            nodeStack.peek().data = -1;
+            nodeStack.pop();
+        }
+
+        return head; // Return the modified list
+    }
+
+    // optimized
+    public Node nextSmallNode(Node head) {
+
+        Stack < Node > stack = new Stack < > ();
+        Node cur = head;
+        while (cur != null) {
+            while (!stack.isEmpty() && stack.peek().data > cur.data) {
+                stack.peek().data = cur.data;
+                stack.pop();
+            }
+            stack.push(cur);
+            cur = cur.next;
+        }
+        while (!stack.isEmpty()) {
+            stack.peek().data = -1;
+            stack.pop();
         }
         return head;
     }
@@ -1509,6 +1560,109 @@ Given 1->1->1->2->3, return 2->3.
         evenTail.next = null;     // there should not be any node after even tail
         oddTail.next  = evenHead;   // join even list after odd
         return oddHead;
+    }
+
+    // Separate Even and Odd values in a linked list
+
+    /*
+    input:
+ 3
+3
+1 2 3
+4
+1 7 6 8
+4
+2 1 4 3
+
+output:
+
+2 1 3
+6 8 1 7
+2 4 1 3
+    * */
+
+    // brut-force : Time limit exceed
+
+    public Node rearrangeEvenOddNodes(Node head) {
+        if (head == null || head.next == null)
+            return head;
+
+        java.util.List<Node> evens = new java.util.LinkedList<>();
+
+        java.util.List<Node> odds = new java.util.LinkedList<>();
+
+        int evenCount = 0;
+        Node temp = head;
+
+        while(temp != null){
+
+            if(temp.data % 2 == 0){
+                evens.add(temp);
+                evenCount++;
+            }else
+                odds.add(temp);
+            temp = temp.next;
+        }
+
+        //rearrange nodes
+
+        int i=0;
+        int j=0;
+
+        // rearranging even values
+
+        Node node = head;
+
+        if(head.data % 2 != 0){
+            head = evens.get(i);
+            node = node.next;
+            i++;
+        }
+
+        while(i < evenCount){
+
+            if(node.data % 2 != 0){
+                node = evens.get(i);
+                node = node.next;
+                i++;
+            }
+        }
+        // rearranging odd values
+
+        for(Node odd: odds){
+            node = odd;
+            node = node.next;
+        }
+        return head;
+    }
+
+    // optimized: 2 pointers (2 heads)
+    public Node rearrangeEvenOdds(Node head) {
+
+        if (head == null || head.next == null)
+            return head;
+
+        Node evenHead = new Node(0);
+        Node oddHead = new Node(0);
+        Node even = evenHead;
+        Node odd = oddHead;
+        Node current = head;
+
+        while (current != null) {
+            if (current.data % 2 == 0) {
+                even.next = current;
+                even = even.next;
+            } else {
+                odd.next = current;
+                odd = odd.next;
+            }
+            current = current.next;
+        }
+
+        even.next = oddHead.next;
+        odd.next = null;
+
+        return evenHead.next;
     }
 
     // Separate Even and Odd values in a linked list

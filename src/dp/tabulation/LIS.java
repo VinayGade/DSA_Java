@@ -19,8 +19,7 @@ One such Longest increasing subsequence is {5,7,9}.
 
 * */
 
-import java.util.Arrays;
-import java.util.TreeSet;
+import java.util.*;
 
 public class LIS {
 
@@ -68,6 +67,26 @@ public class LIS {
         return largestMax;
     }
 
+    // 2-D dynamic programming
+    public int lengthLIS_dp(int n, int[] nums) {
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+
+        int max = 1;
+        for (int len : dp) {
+            max = Math.max(max, len);
+        }
+        return max;
+    }
+
     // Binary Search
     public static int lengthOfLIS(int[] nums) {
 
@@ -102,6 +121,23 @@ public class LIS {
         }
         return len;
     }
+
+    public int lengthOfLIS_binarySearch(int n, int[] nums) {
+        List<Integer> lis = new ArrayList<>();
+
+        for (int num : nums) {
+            int idx = Collections.binarySearch(lis, num);
+            if (idx < 0) idx = -idx - 1;
+
+            if (idx == lis.size()) {
+                lis.add(num);
+            } else {
+                lis.set(idx, num);
+            }
+        }
+        return lis.size();
+    }
+
 
     // using TreeSet
     public int lengthOfLIS(int n,int[] nums) {

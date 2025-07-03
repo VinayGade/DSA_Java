@@ -1,9 +1,6 @@
 package hashing;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /*
 Find Duplicate in Array
@@ -26,6 +23,18 @@ public class RepeatedElement {
             distincts.add(x);
         }
         return result;
+    }
+
+    public int findDuplicate(int[] arr) {
+        int n = arr.length;
+        Set<Integer> elements = new HashSet<>();
+        for (int j : arr) {
+            if (elements.contains(j))
+                return j;
+            else
+                elements.add(j);
+        }
+        return -1; // This statement won't execute as per the problem stmt
     }
 
     public static void main(String[] args) {

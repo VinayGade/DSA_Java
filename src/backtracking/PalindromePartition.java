@@ -95,6 +95,30 @@ public class PalindromePartition {
         return true;
     }
 
+    // final approach
+    public ArrayList<ArrayList<String>> palindromicParts(String s) {
+
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        backtrack(s, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    void backtrack(String s, int start, ArrayList<String> current, ArrayList<ArrayList<String>> result){
+        if(start == s.length()){
+            result.add(new ArrayList<>(current));
+            return;
+        }
+
+        for(int end = start + 1; end <= s.length(); end++){
+            String substr = s.substring(start, end);
+            if(isPalindrome(substr)){
+                current.add(substr);
+                backtrack(s, end, current, result);
+                current.remove(current.size() - 1);
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         // approach-1

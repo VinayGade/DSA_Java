@@ -1,5 +1,6 @@
 package dp.hackerrank;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
@@ -7,6 +8,29 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class CoinChange {
+
+    // Recursion
+    public static long getWaysToAmount(int amount, List<Long> coins) {
+
+        return change(0, coins, amount);
+    }
+
+    static long change(int i, List<Long> coins, int amount){
+        int n = coins.size();
+        if(amount == 0){
+            return 1L;
+        }
+        if(i == n){
+            return 0L;
+        }
+        if(coins.get(i) > amount){
+            return change(i+1, coins, amount);
+        }
+        long take = (long) change(i, coins, (amount - coins.get(i).intValue()));
+        long skip = (long) change(i+1, coins, amount);
+
+        return take+skip;
+    }
 
     public static long getWays(int n, List<Long> c) {
 
@@ -32,7 +56,6 @@ public class CoinChange {
         /*
             Time: O(n * c)
             Space: O(n * c)
-            Thanks to: youtuber Back To Back SWE
         */
 
         int s = c.size();
@@ -70,6 +93,14 @@ public class CoinChange {
     }
 
     public static void main(String[] args) {
+
+        List<Long> coins = Arrays.asList(2L, 5L, 3L, 6L);
+        int amount = 10;
+
+        System.out.println("using Recursion:");
+        long ways = getWaysToAmount(amount, coins);
+
+        System.out.println(ways);
 
     }
 }

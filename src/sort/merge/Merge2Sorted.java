@@ -53,4 +53,44 @@ public class Merge2Sorted {
             System.out.print(x+ " ");
         }
     }
+
+    // Leetcode 88. Merge Sorted Array
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int length = m+n;
+        int[] c = new int[length];
+        //int left = 0;
+        //int i = left;
+
+        int i =0;
+
+        //int right = length - 1;
+        //int mid = (left + right) / 2;
+
+        //int j=mid+1;
+        int j=0;
+        int k=0;
+
+        while(i<m && j<n){
+            if(nums1[i] < nums2[j]){
+                c[k] = nums1[i];
+                i++;
+            }else{
+                c[k] = nums2[j];
+                j++;
+            }
+            k++;
+        }
+        while(i<m){
+            c[k] = nums1[i];
+            i++;
+            k++;
+        }
+        while(j<n){
+            c[k] = nums2[j];
+            j++;
+            k++;
+        }
+        for(int x=0, y=0; x<length; x++, y++)
+            nums1[x]=c[y];
+    }
 }

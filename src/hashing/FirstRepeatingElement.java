@@ -1,9 +1,6 @@
 package hashing;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class FirstRepeatingElement {
 
@@ -68,6 +65,26 @@ public class FirstRepeatingElement {
             set.add(elements[i]);
         }
         return  (index != -1) ? elements[index] : index;
+    }
+
+    public static Map<Integer, Integer> findFrequency(ArrayList<Integer> A){
+        Map<Integer, Integer> frequencyMap = new LinkedHashMap<>();
+        for(int x: A){
+            frequencyMap.put(x, frequencyMap.getOrDefault(x, 0)+1);
+        }
+        return frequencyMap;
+    }
+
+    public int findFirstRepeating(ArrayList<Integer> A){
+        int repeating = -1;
+        Map<Integer, Integer> frequencyMap =findFrequency(A);
+        for(Map.Entry<Integer, Integer> entry: frequencyMap.entrySet()){
+            if(entry.getValue() > 1){
+                repeating = entry.getKey();
+                break;
+            }
+        }
+        return repeating;
     }
 
     public static void main(String[] args) {
