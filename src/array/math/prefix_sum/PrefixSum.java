@@ -29,8 +29,6 @@ prefixSum[0] = arr[0]
 for i = 1 to N-1 do
     prefixSum[i] = prefixSum[i-1] + arr[i]
 return prefixSum
-
-
 * */
 
 public class PrefixSum {

@@ -59,7 +59,6 @@ public class LongestSubstringKUnique {
         String s = "aabacbebebe";
         int k = 3;
         int length = longestKSubstr(s, k);
-
         System.out.println(length);
     }
 }

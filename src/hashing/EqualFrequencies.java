@@ -115,10 +115,7 @@ public class EqualFrequencies {
     public static void main(String[] args) {
 
         String s = "xxxxyyzz";
-
         boolean flag = sameFreq(s);
-
         System.out.println(flag);
-
     }
 }

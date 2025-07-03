@@ -52,7 +52,6 @@ public class SubstringWith_K_Elements {
 
         String s = "aabab";
         int k = 3;
-
         int count = substrCount(s, k);
         System.out.println(count);
     }

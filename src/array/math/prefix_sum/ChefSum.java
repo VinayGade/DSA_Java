@@ -45,7 +45,6 @@ public class ChefSum {
             int[] a = new int[N];
 
             for(int i=0; i<N; i++){
-
                 a[i] = scanner.nextInt();
             }
 
@@ -136,6 +135,5 @@ public class ChefSum {
             System.out.println(bestIndex + 1);
         }
     }
-
     * */
 }
